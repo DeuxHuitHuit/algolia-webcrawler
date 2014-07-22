@@ -1,0 +1,24 @@
+{
+	"app": "<my app>",
+	"cred": {
+		"appid": "<ALGOLIA APP ID>",
+		"apikey": "<ALGOLIA API KEY>"
+	},
+	"indexname": "<my index>",
+	"sitemaps": [
+		{"url": "http://example.com/fr/sitemap.xml", "lang": "fr"},
+		{"url": "http://example.com/en/sitemap.xml", "lang": "en"}
+	],
+	"http": {
+		"auth": ""
+	},
+	"selectors": {
+		"title": "title",
+		"image": "meta[property=\"og:image\"]",
+		"description": "meta[name=\"description\"]",
+		"text": "h1, h2, h3, h4, h5, h6, p, li"
+	},
+	"formatters": {
+		"title": "-"
+	}
+}
