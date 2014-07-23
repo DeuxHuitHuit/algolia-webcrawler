@@ -180,4 +180,5 @@ Indexing is done automatically, at each run. To tweak how indexing works, please
 ### LICENSE
 
 [MIT](http://deuxhuithuit.mit-license.org)    
-Copyrights (c) 2014 [Deux Huit Huit](http://deuxhuithuit.com)
+Made with love in Montréal by [Deux Huit Huit](http://deuxhuithuit.com)    
+Copyrights (c) 2014
