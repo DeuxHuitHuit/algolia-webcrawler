@@ -64,7 +64,7 @@ Your generated Algolia API key.
 
 #### indexname: String
 
-Your index name. The index should already exists in Algolia and be properly configured.
+Your index name.
 
 #### sitemaps: Array<Sitemap>
 
@@ -131,11 +131,6 @@ The stored object on Algolia's server is as follows
 
 One thing to notice is that text is an array, since we tried to preserve the original text
 node -> actual value relationship. Algolia handle this just fine.
-
-### Indexes
-
-You must create indexes in order to be able to use Algolia's search.
-We recommand adding 'title', 'description', 'url' and 'text' attributes to the indexes.
 
 
 ### LICENSE
