@@ -141,4 +141,5 @@ We recommand adding 'title', 'description', 'url' and 'text' attributes to the i
 ### LICENSE
 
 [MIT](http://deuxhuithuit.mit-license.org)    
-Copyrights (c) 2014 [Deux Huit Huit](http://deuxhuithuit.com)
+Made with love in Montréal by [Deux Huit Huit](http://deuxhuithuit.com)    
+Copyrights (c) 2014
