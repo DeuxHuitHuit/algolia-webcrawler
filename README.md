@@ -80,7 +80,8 @@ An object containing different http options.
 
 #### http.auth: String
 
-The auth string. If you do not need auth, please specify an empty String.
+The auth string, in node's `username:password` form.
+If you do not need auth, you still need to specify an empty String.
 
 #### selectors: Object
 
