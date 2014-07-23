@@ -12,8 +12,9 @@ This script should be run via crontab in order to crawl the entire website at re
 
 ### Pre-requesites
 
-1. Having at least one valid sitemap.xml url that contains all the url you want to be indexed.
-2. The sitemaps must contain at least the `<loc>` node.
+1. Having at least one valid [sitemap.xml](http://robots-txt.com/sitemaps/) 
+url that contains all the url you want to be indexed.
+2. The sitemap(s) must contain at least the `<loc>` node, i.e. `urlset/url/loc`.
 
 ### Installation
 
