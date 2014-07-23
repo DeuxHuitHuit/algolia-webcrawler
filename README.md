@@ -118,7 +118,7 @@ The stored object on Algolia's server is as follows
 ````js
 {
 	date: new Date(),
-	url: 'http://...'
+	url: 'http://...',
 	objectID: shasum.digest('base64'),
 	lang: sitemap.lang,
 	title: '',
