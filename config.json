@@ -4,15 +4,17 @@
 		"appid": "<ALGOLIA APP ID>",
 		"apikey": "<ALGOLIA API KEY>"
 	},
-	"indexname": "<my index>",
+	"index": {
+		"name": "<my index>",
+		"settings": {
+			"attributesToIndex":  ["title", "unordered(description)", "unordered(text)"],
+			"attributesForFaceting":  ["lang"]
+		}
+	} ,
 	"sitemaps": [
 		{"url": "http://example.com/fr/sitemap.xml", "lang": "fr"},
 		{"url": "http://example.com/en/sitemap.xml", "lang": "en"}
 	],
-	"indexes": {
-		"attributesToIndex": ["title", "unordered(description)", "unordered(text)"],
-		"attributesForFaceting": ["lang"]
-	},
 	"http": {
 		"auth": ""
 	},

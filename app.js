@@ -13,7 +13,7 @@ var sitemap = require('./lib/sitemap');
 
 var Algolia = require('algolia-search');
 var client = new Algolia(config.cred.appid, config.cred.apikey);
-var pages = client.initIndex(config.indexname);
+var pages = client.initIndex(config.index.name);
 
 // Welcome
 console.log('Welcome to "%s" %s v%s', config.app, pack.name, pack.version);
@@ -43,8 +43,8 @@ sitemap(config, function (sitemap, urls) {
 });
 
 // Configure index
-console.log('Configuring your index %s', config.indexname);
-pages.setSettings(config.indexes, function (error, result) {
+console.log('Configuring your index %s', config.index.name);
+pages.setSettings(config.index.settings, function (error, result) {
 	if (!!error) {
 		console.log();
 		console.error('Error! Configuring index failed: ' + result.message);
