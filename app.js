@@ -14,14 +14,11 @@ var sitemap = require('./lib/sitemap');
 var Algolia = require('algolia-search');
 var client = new Algolia(config.cred.appid, config.cred.apikey);
 var pages = client.initIndex(config.indexname);
+
+// Welcome
 console.log('Welcome to "%s" %s v%s', config.app, pack.name, pack.version);
 
-console.log('Configuring your index %s', config.indexname);
-pages.setSettings({
-	attributesToIndex: ['title', 'unordered(description)', 'unordered(text)'],
-	attributesForFaceting: ['lang']
-});
-
+// Launch sitemap crawling
 sitemap(config, function (sitemap, urls) {
 	var results = _.map(urls, function (url, index) {
 		processOne(config, url, function (record) {
@@ -40,3 +37,6 @@ sitemap(config, function (sitemap, urls) {
 	console.log('Sitemap %s registered %s / %s urls', sitemap.url, results.length, urls.length);
 });
 
+// Configure index
+console.log('Configuring your index %s', config.indexname);
+pages.setSettings(config.indexes);
