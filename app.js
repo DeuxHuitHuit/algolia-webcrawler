@@ -17,6 +17,7 @@ var pages = client.initIndex(config.indexname);
 
 // Welcome
 console.log('Welcome to "%s" %s v%s', config.app, pack.name, pack.version);
+console.log();
 
 // Launch sitemap crawling
 sitemap(config, function (sitemap, urls) {
@@ -24,9 +25,13 @@ sitemap(config, function (sitemap, urls) {
 		processOne(config, url, function (record) {
 			pages.saveObject(record, function (error, result) {
 				if (!!error) {
-					console.error(error);
+					console.log();
+					console.error('Error! ' + result.message);
+					console.log();
 				} else if (record.objectID !== result.objectID) {
-					console.error('Object ID mismatch!');
+					console.log();
+					console.error('Error! Object ID mismatch!');
+					console.log();
 				} else {
 					console.log('Object %s:%s saved (%s)', record.objectID, record.lang, record.url);
 				}
@@ -39,4 +44,13 @@ sitemap(config, function (sitemap, urls) {
 
 // Configure index
 console.log('Configuring your index %s', config.indexname);
-pages.setSettings(config.indexes);
+pages.setSettings(config.indexes, function (error, result) {
+	if (!!error) {
+		console.log();
+		console.error('Error! Configuring index failed: ' + result.message);
+		console.log();
+	} else {
+		console.log('Configured index properly');
+		console.log();
+	}
+});
