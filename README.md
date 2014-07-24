@@ -1,5 +1,7 @@
 # Algolia Webcrawler
 
+> Version 0.0.2
+
 Simple node worker that crawls sitemaps in order to keep an [Algolia](https://www.algolia.com/) index up-to-date.
 
 It uses simple CSS selectors in order to find the actual text content to index.
