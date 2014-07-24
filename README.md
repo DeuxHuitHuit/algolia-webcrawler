@@ -6,6 +6,18 @@ It uses simple CSS selectors in order to find the actual text content to index.
 
 This app uses [Algolia's node library](https://github.com/algolia/algoliasearch-client-node).
 
+## TL;DR
+
+1. [Usage](#usage)
+2. [Pre-requesites](#pre-requesites)
+3. [Installation](#installation)
+4. [Running](#running)
+5. [Configuration file](#configuration-file)
+6. [Configuration options](#configuration-options)
+7. [Stored Object](#stored-object)
+8. [Indexing](#indexing)
+9. [License](#license)
+
 ## Usage
 
 This script should be run via crontab in order to crawl the entire website at regular interval.
@@ -15,6 +27,8 @@ This script should be run via crontab in order to crawl the entire website at re
 1. Having at least one valid [sitemap.xml](http://robots-txt.com/sitemaps/) 
 url that contains all the url you want to be indexed.
 2. The sitemap(s) must contain at least the `<loc>` node, i.e. `urlset/url/loc`.
+3. An empty Algolia index.
+4. An Algolia Credential that can create objects and set settings on the index.
 
 ### Installation
 
@@ -62,9 +76,32 @@ Your Algolia App ID.
 
 Your generated Algolia API key.
 
-#### indexname: String
+#### index: Object
+
+An object containing various values related to your index.
+
+#### index.name: String
 
 Your index name.
+
+#### index.settings: Object
+
+An object that will act as argument to Algolia's Index#setSetting method.
+
+Please read [Algolia's documentation on that subject](https://github.com/algolia/algoliasearch-client-node#index-settings).
+Any valid attribute can be used.
+
+#### index.settings.attributesToIndex: Array<String>
+
+An array of string that defines which attributes are indexable,
+which means that full text search will be performed against them.
+For a complete list of possible attributes see the [Stored Object](#stored-object) section.
+
+#### index.settings.attributesForFaceting: Array<String>
+
+An array of string that defines which attributes are filterable,
+which means that you can use them to exclude some records from being returned.
+For a complete list of possible attributes see the [Stored Object](#stored-object) section.
 
 #### sitemaps: Array<Sitemap>
 
@@ -132,6 +169,10 @@ The stored object on Algolia's server is as follows
 One thing to notice is that text is an array, since we tried to preserve the original text
 node -> actual value relationship. Algolia handle this just fine.
 
+### Indexing
+
+Indexing is done automatically, at each run. To tweak how indexing works, please see the
+[index.settings](#index-settings-object) configuration option.
 
 ### LICENSE
 
