@@ -22,11 +22,15 @@ console.log();
 // Launch sitemap crawling
 sitemap(config, function (sitemap, urls) {
 	var results = _.map(urls, function (url, index) {
-		processOne(config, url, function (record) {
+		var processResults = processOne(config, url, function (error, record) {
+			if (!!error || !record) {
+				console.error('Error! ' + error.message);
+				return;
+			}
 			pages.saveObject(record, function (error, result) {
 				if (!!error) {
 					console.log();
-					console.error('Error! ' + result.message);
+					console.error('Error! ' + (result.message || error.message));
 					console.log();
 				} else if (record.objectID !== result.objectID) {
 					console.log();
@@ -37,6 +41,9 @@ sitemap(config, function (sitemap, urls) {
 				}
 			});
 		});
+		if (!processResults.ok) {
+			console.error(processResults.message || 'Error!');
+		}
 	});
 	
 	console.log('Sitemap %s registered %s / %s urls', sitemap.url, results.length, urls.length);
