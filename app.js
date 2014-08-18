@@ -10,6 +10,8 @@ var _ = require('lodash');
 
 var processOne = require('./lib/process');
 var sitemap = require('./lib/sitemap');
+var sitemapCount = 0;
+var urlCount = 0;
 
 var Algolia = require('algolia-search');
 var client = new Algolia(config.cred.appid, config.cred.apikey);
@@ -21,6 +23,8 @@ console.log();
 
 // Launch sitemap crawling
 sitemap(config, function (sitemap, urls) {
+	sitemapCount += urls.length;
+	
 	if (!urls.length) {
 		console.log('Sitemap %s do not contains any urls', sitemap.url);
 		return;
@@ -35,8 +39,10 @@ sitemap(config, function (sitemap, urls) {
 						console.log('Object ' + record.objectID + ' has been deleted');
 					});
 				}
+				removeOldEntries();
 				return;
 			}
+			
 			pages.saveObject(record, function (error, result) {
 				if (!!error) {
 					console.log();
@@ -49,6 +55,7 @@ sitemap(config, function (sitemap, urls) {
 				} else {
 					console.log('Object %s:%s saved (%s)', record.objectID, record.lang, record.url);
 				}
+				removeOldEntries();
 			});
 		});
 		if (!processResults.ok) {
@@ -71,3 +78,20 @@ pages.setSettings(config.index.settings, function (error, result) {
 		console.log();
 	}
 });
+
+var removeOldEntries = function () {
+	urlCount++;
+	if (urlCount === sitemapCount && !!config.oldentries) {
+		console.log()
+		console.log('Removing old entries...');
+		pages.deleteByQuery('*', {
+			numericFilters: ['timestamp<' + (new Date().getTime() - config.oldentries)]
+		}, function (error, content) {
+			if (!!error) {
+				console.error('Error deleting entries.');
+				return;
+			}
+			console.log('Deleting old entries done.');
+		});
+	}
+};

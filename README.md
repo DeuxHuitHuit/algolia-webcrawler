@@ -78,6 +78,12 @@ Your Algolia App ID.
 
 Your generated Algolia API key.
 
+#### oldentries: Integer
+
+The maximum number of seconds an entry can live without being updated. After
+each run, the app will search for old entries and delete them. If you do not
+wish to get rid of old entries, set this value to 0.
+
 #### index: Object
 
 An object containing various values related to your index.
