@@ -21,10 +21,20 @@ console.log();
 
 // Launch sitemap crawling
 sitemap(config, function (sitemap, urls) {
+	if (!urls.length) {
+		console.log('Sitemap %s do not contains any urls', sitemap.url);
+		return;
+	}
+	
 	var results = _.map(urls, function (url, index) {
 		var processResults = processOne(config, url, function (error, record) {
 			if (!!error || !record) {
 				console.error('Error! ' + error.message);
+				if (!!error.pageNotFound && !!record) {
+					pages.deleteObject(record.objectID, function (error, result) {
+						console.log('Object ' + record.objectID + ' has been deleted');
+					});
+				}
 				return;
 			}
 			pages.saveObject(record, function (error, result) {
