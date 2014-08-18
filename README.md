@@ -1,6 +1,6 @@
 # Algolia Webcrawler
 
-> Version 0.0.3
+> Version 0.0.4
 
 Simple node worker that crawls sitemaps in order to keep an [Algolia](https://www.algolia.com/) index up-to-date.
 
