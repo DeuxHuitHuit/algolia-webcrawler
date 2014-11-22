@@ -15,7 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "algolia-search": "^1.5.9",
-    "cheerio": "^0.17.0",
+    "cheerio": "^0.18.0",
     "html-entities": "^1.0.10",
     "lodash": "^2.4.1",
     "md5": "^1.0.0",
