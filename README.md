@@ -1,4 +1,4 @@
-# Algolia Webcrawler
+# Algolia Webcrawler ![David DM](https://david-dm.org/DeuxHuitHuit/algolia-webcrawler.png)
 
 > Version 0.0.4
 
