@@ -3,8 +3,8 @@
   "version": "0.0.4",
   "description": "Simple node worker that crawls sitemaps in order to keep an algolia index up-to-date.",
   "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "bin": {
+    "algolia-webcrawler": "app.js"
   },
   "keywords": [
     "algolia",
