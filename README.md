@@ -1,7 +1,5 @@
 # Algolia Webcrawler ![David DM](https://david-dm.org/DeuxHuitHuit/algolia-webcrawler.png)
 
-> Version 0.0.4
-
 Simple node worker that crawls sitemaps in order to keep an [Algolia](https://www.algolia.com/) index up-to-date.
 
 It uses simple CSS selectors in order to find the actual text content to index.
