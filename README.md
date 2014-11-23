@@ -34,23 +34,13 @@ url that contains all the url you want to be indexed.
 
 ### Installation
 
-#### 1. Get the latest version
-
-#### npm
-
-```
-npm i algolia-webcrawler -g
-```
-
-##### git
-
-- ssh+git: `git clone git@github.com:DeuxHuitHuit/algolia-webcrawler.git`
-- https: `git clone https://github.com/DeuxHuitHuit/algolia-webcrawler.git`
-
-##### https
-- download the [latest tarball](https://github.com/DeuxHuitHuit/algolia-webcrawler/releases)
-
-#### 2. create a [config.json](#configuration-file) file
+1. Get the latest version
+	- **npm** `npm i algolia-webcrawler -g`
+	- **git**
+		- ssh+git: `git clone git@github.com:DeuxHuitHuit/algolia-webcrawler.git`
+		- https: `git clone https://github.com/DeuxHuitHuit/algolia-webcrawler.git`
+	- **https** download the [latest tarball](https://github.com/DeuxHuitHuit/algolia-webcrawler/releases)
+2. create a [config.json](#configuration-file) file
 
 ### Running
 
