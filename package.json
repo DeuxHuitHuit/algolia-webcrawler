@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "description": "Simple node worker that crawls sitemaps in order to keep an algolia index up-to-date.",
   "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
   "bin": {
     "algolia-webcrawler": "app.js"
   },
