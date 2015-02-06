@@ -10,6 +10,7 @@ var _ = require('lodash');
 
 var processOne = require('./lib/process');
 var sitemap = require('./lib/sitemap');
+var dns = require('./lib/dns-cache');
 var sitemapCount = 0;
 var urlCount = 0;
 
