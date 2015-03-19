@@ -17,10 +17,10 @@
   "author": "deuxhuithuit",
   "license": "MIT",
   "dependencies": {
-    "algolia-search": "^1.5.9",
+    "algolia-search": "^1.7.7",
     "cheerio": "^0.18.0",
-    "html-entities": "^1.0.10",
-    "lodash": "^2.4.1",
+    "html-entities": "^1.1.2",
+    "lodash": "^3.5.0",
     "md5": "^1.0.0",
     "optimist": "^0.6.1",
     "trim": "0.0.1"
