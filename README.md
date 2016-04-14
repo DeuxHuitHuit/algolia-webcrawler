@@ -159,9 +159,9 @@ CSS selector for the title of the page.
 An object containing formatter string. Their values are removed from the original result obtained
 with the associated CSS selector.
 
-#### formatters.title: String
+#### formatters.title: String,Array
 
-The string to remove from the title of the page.
+The string to remove from the title of the page. Can also be an array of strings
 
 
 ### Stored Object
@@ -192,5 +192,5 @@ Indexing is done automatically, at each run. To tweak how indexing works, please
 ### LICENSE
 
 [MIT](http://deuxhuithuit.mit-license.org)    
-Made with love in Montréal by [Deux Huit Huit](http://deuxhuithuit.com)    
-Copyrights (c) 2014
+Made with love in Montréal by [Deux Huit Huit](https://deuxhuithuit.com)    
+Copyrights (c) 2014-2016
