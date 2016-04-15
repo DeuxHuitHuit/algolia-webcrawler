@@ -154,6 +154,10 @@ CSS selector for the image of the page.
 
 CSS selector for the title of the page.
 
+#### selectors[key]: String
+
+CSS selector for the "key" property. You can add custom keys as you wish.
+
 #### formatters: Object
 
 An object containing formatter string. Their values are removed from the original result obtained
@@ -161,8 +165,15 @@ with the associated CSS selector.
 
 #### formatters.title: String,Array
 
-The string to remove from the title of the page. Can also be an array of strings
+The string to remove from the title of the page. Can also be an array of strings.
 
+#### formatters[key]: String,Array
+
+The string to remove from the specified key. Can also be an array of strings.
+
+#### defaults[key]: String
+
+The default value inserted for the specified key. Will be set if the value is falsy.
 
 ### Stored Object
 
