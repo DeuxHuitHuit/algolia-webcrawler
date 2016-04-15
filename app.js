@@ -86,6 +86,7 @@ pages.setSettings(config.index.settings, function (error, result) {
 var removeOldEntries = function () {
 	urlCount++;
 	if (urlCount === sitemapCount && !!config.oldentries) {
+		processOne.stop();
 		console.log()
 		console.log('Removing old entries...');
 		pages.deleteByQuery('*', {
