@@ -27,5 +27,8 @@
 	},
 	"formatters": {
 		"title": "-"
+	},
+	"defaults": {
+		
 	}
 }
