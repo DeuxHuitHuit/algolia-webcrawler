@@ -25,8 +25,6 @@ console.log();
 
 // Launch sitemap crawling
 sitemap(config, function (sitemap, urls) {
-	sitemapCount += urls.length;
-	
 	if (!urls.length) {
 		console.log('Sitemap %s do not contains any urls', sitemap.url);
 		return;
@@ -45,6 +43,8 @@ sitemap(config, function (sitemap, urls) {
 			console.log('%s blacklisted %d urls', sitemap.url, totalCount - urls.length);
 		}
 	}
+	
+	sitemapCount += urls.length;
 	
 	var results = _.map(urls, function (url, index) {
 		console.log('Registered ' + url.url);
