@@ -31,7 +31,10 @@ sitemap(config, function (sitemap, urls) {
 		return;
 	}
 	
+	console.log('Parsing Sitemap %s', sitemap.url);
+	
 	var results = _.map(urls, function (url, index) {
+		console.log('Registered ' + url.url);
 		var processResults = processOne(config, url, function (error, record) {
 			if (!!error || !record) {
 				console.error('Error! ' + error.message);
