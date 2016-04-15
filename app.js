@@ -6,6 +6,7 @@ var pack = require('./package.json');
 var path = require('path');
 var config = require(argv.config ? path.resolve(argv.config) : './config.json');
 var fs = require('fs');
+var u = require('url');
 var _ = require('lodash');
 
 var processOne = require('./lib/process');
@@ -32,6 +33,18 @@ sitemap(config, function (sitemap, urls) {
 	}
 	
 	console.log('Parsing Sitemap %s', sitemap.url);
+	
+	var totalCount = urls.length;
+	if (_.isArray(config.blacklist)) {
+		urls = _.filter(urls, function (url) {
+			return _.all(_.map(config.blacklist, function (bl) {
+				return url.url !== bl && u.parse(url.url).path !== bl;
+			}));
+		});
+		if (totalCount != urls.length) {
+			console.log('%s blacklisted %d urls', sitemap.url, totalCount - urls.length);
+		}
+	}
 	
 	var results = _.map(urls, function (url, index) {
 		console.log('Registered ' + url.url);

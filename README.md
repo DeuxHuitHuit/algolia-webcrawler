@@ -175,6 +175,10 @@ The string to remove from the specified key. Can also be an array of strings.
 
 The default value inserted for the specified key. Will be set if the value is falsy.
 
+#### blacklist: Array
+
+All url are checked against all items in the blacklist. If the complete url or its path component is in the blacklist, it won't get indexed.
+
 ### Stored Object
 
 The stored object on Algolia's server is as follows
