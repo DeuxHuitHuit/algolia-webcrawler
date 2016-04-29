@@ -4,7 +4,7 @@
 		"appid": "<ALGOLIA APP ID>",
 		"apikey": "<ALGOLIA API KEY>"
 	},
-	"oldentries" : 86400,
+	"oldentries" : 86400000,
 	"index": {
 		"name": "<my index>",
 		"settings": {
