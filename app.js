@@ -1,3 +1,6 @@
+/**
+ * App
+ */
 
 'use strict';
 
