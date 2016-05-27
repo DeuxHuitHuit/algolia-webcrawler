@@ -18,8 +18,8 @@ var dns = require('./lib/dns-cache');
 var sitemapCount = 0;
 var urlCount = 0;
 
-var Algolia = require('algolia-search');
-var client = new Algolia(config.cred.appid, config.cred.apikey);
+var algoliasearch = require('algoliasearch');
+var client = algoliasearch(config.cred.appid, config.cred.apikey);
 var pages = client.initIndex(config.index.name);
 
 // Welcome
@@ -38,7 +38,7 @@ sitemap(config, function (sitemap, urls) {
 	var totalCount = urls.length;
 	if (_.isArray(config.blacklist)) {
 		urls = _.filter(urls, function (url) {
-			return _.all(_.map(config.blacklist, function (bl) {
+			return _.every(_.map(config.blacklist, function (bl) {
 				return url.url !== bl && u.parse(url.url).path !== bl;
 			}));
 		});
