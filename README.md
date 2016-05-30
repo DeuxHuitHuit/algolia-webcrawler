@@ -4,7 +4,7 @@ Simple node worker that crawls sitemaps in order to keep an [Algolia](https://ww
 
 It uses simple CSS selectors in order to find the actual text content to index.
 
-This app uses [Algolia's node library](https://github.com/algolia/algoliasearch-client-node).
+This app uses [Algolia's library](https://github.com/algolia/algoliasearch-client-js).
 
 ## TL;DR
 
