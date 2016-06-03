@@ -66,7 +66,12 @@ sitemap(config, function (sitemap, urls) {
 			pages.saveObject(record, function (error, result) {
 				if (!!error) {
 					console.log();
-					console.error('Error! ' + (result.message || error.message));
+					if (!!result && !!result.message) {
+						console.error('Error! ' + result.message);
+					}
+					if (!!error && !!error.message) {
+						console.error('Error! ' + error.message);
+					}
 					console.log();
 				} else if (record.objectID !== result.objectID) {
 					console.log();
@@ -91,7 +96,12 @@ console.log('Configuring your index %s', config.index.name);
 pages.setSettings(config.index.settings, function (error, result) {
 	if (!!error) {
 		console.log();
-		console.error('Error! Configuring index failed: ' + result.message);
+		if (!!result && !!result.message) {
+			console.error('Error! ' + result.message);
+		}
+		if (!!error && !!error.message) {
+			console.error('Error! ' + error.message);
+		}
 		console.log();
 	} else {
 		console.log('Configured index properly');
