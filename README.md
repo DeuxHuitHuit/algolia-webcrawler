@@ -102,7 +102,7 @@ Your index name.
 
 An object that will act as argument to Algolia's `Index#setSetting` method.
 
-Please read [Algolia's documentation on that subject](https://github.com/algolia/algoliasearch-client-node#index-settings).
+Please read [Algolia's documentation on that subject](https://github.com/algolia/algoliasearch-client-js#index-settings).
 Any valid attribute documented for this method can be used.
 
 #### index.settings.attributesToIndex: Array<String>
