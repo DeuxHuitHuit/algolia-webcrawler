@@ -17,11 +17,11 @@
   "author": "deuxhuithuit",
   "license": "MIT",
   "dependencies": {
-    "algoliasearch": "^3.14.5",
-    "cheerio": "^0.20.0",
+    "algoliasearch": "^3.18.1",
+    "cheerio": "^0.22.0",
     "html-entities": "^1.2.0",
-    "lodash": "^4.13.1",
-    "md5": "^2.1.0",
+    "lodash": "^4.16.2",
+    "md5": "^2.2.1",
     "optimist": "^0.6.1",
     "trim": "0.0.1"
   },
