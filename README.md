@@ -171,13 +171,18 @@ The string to remove from the title of the page. Can also be an array of strings
 
 The string to remove from the specified key. Can also be an array of strings.
 
+#### types[key]: String
+
+The parse function used to format the value. The only supported type right now is "integer"
+
 #### defaults[key]: String
 
 The default value inserted for the specified key. Will be set if the value is falsy.
 
 #### blacklist: Array
 
-All url are checked against all items in the blacklist. If the complete url or its path component is in the blacklist, it won't get indexed.
+All url are checked against all items in the blacklist.
+If the complete url or its path component is in the blacklist, it won't get indexed.
 
 ### Stored Object
 
