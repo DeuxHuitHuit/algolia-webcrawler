@@ -23,10 +23,14 @@
 		"title": "title",
 		"image": "meta[property=\"og:image\"]",
 		"description": "meta[name=\"description\"]",
-		"text": "h1, h2, h3, h4, h5, h6, p, li"
+		"text": "h1, h2, h3, h4, h5, h6, p, li",
+		"example_field": ".my-selector-with-numeric-value"
 	},
 	"formatters": {
 		"title": "-"
+	},
+	"types": {
+		"example_field": "integer"
 	},
 	"defaults": {
 		
