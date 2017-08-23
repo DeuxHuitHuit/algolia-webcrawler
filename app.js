@@ -60,16 +60,7 @@ sitemap(config, function (sitemap, urls) {
 	sitemapProcessed++;
 	
 	if (!urls.length) {
-		console.log('Sitemap %s do not contains any urls', sitemap.url);
-	}
-	
-	// All sitemaps have failed
-	if (sitemapProcessed === config.sitemaps.length && sitemapCount === 0) {
-		console.log();
-		process.exit(-1);
-	} else if (!urls.length) {
-		// Current sitemap failed, exit
-		return;
+		console.log('Sitemap %s does not contain any urls', sitemap.url);
 	}
 	
 	console.log('Parsing Sitemap %s', sitemap.url);
@@ -87,6 +78,15 @@ sitemap(config, function (sitemap, urls) {
 	}
 	
 	sitemapCount += urls.length;
+
+	// All sitemaps have failed
+	if (sitemapProcessed === config.sitemaps.length && sitemapCount === 0) {
+		console.log('All Sitemaps do not contain any urls');
+		process.exit(-1);
+	} else if (!urls.length) {
+		// Current sitemap failed, exit
+		return;
+	}
 	
 	var results = _.map(urls, function (url, index) {
 		console.log('Registered ' + url.url);
