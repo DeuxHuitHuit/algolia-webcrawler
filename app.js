@@ -90,7 +90,11 @@ sitemap(config, function (sitemap, urls) {
 	
 	var results = _.map(urls, function (url, index) {
 		console.log('Registered ' + url.url);
-		var processResults = processOne(config, url, function (error, record) {
+		var processResults = processOne({
+			config: config,
+			url: url,
+			index: index
+		}, function (error, record) {
 			if (!!error || !record) {
 				console.error('Error! ' + error.message);
 				if (!!error.pageNotFound && !!record) {

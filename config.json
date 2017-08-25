@@ -17,8 +17,12 @@
 		{"url": "http://example.com/en/sitemap.xml", "lang": "en"}
 	],
 	"http": {
-		"auth": ""
+		"auth": "",
+		"headers": {
+
+		}
 	},
+	"delayBetweenRequest": 100,
 	"selectors": {
 		"title": "title",
 		"image": "meta[property=\"og:image\"]",
