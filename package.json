@@ -17,7 +17,7 @@
   "author": "deuxhuithuit",
   "license": "MIT",
   "dependencies": {
-    "algoliasearch": "^3.22.1",
+    "algoliasearch": "^3.24.3",
     "cheerio": "^0.22.0",
     "html-entities": "^1.2.0",
     "lodash": "^4.17.4",
