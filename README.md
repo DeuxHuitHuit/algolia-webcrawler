@@ -84,6 +84,10 @@ Your Algolia App ID.
 
 Your generated Algolia API key.
 
+#### delayBetweenRequest: Integer
+
+Simple delay between each requests made to the website in milliseconds.
+
 #### oldentries: Integer
 
 The maximum number of seconds an entry can live without being updated. After
