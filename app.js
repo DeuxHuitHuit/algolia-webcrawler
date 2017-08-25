@@ -90,43 +90,45 @@ sitemap(config, function (sitemap, urls) {
 	
 	var results = _.map(urls, function (url, index) {
 		console.log('Registered ' + url.url);
-		setTimeout(function () {
-			var processResults = processOne(config, url, function (error, record) {
-				if (!!error || !record) {
-					console.error('Error! ' + error.message);
-					if (!!error.pageNotFound && !!record) {
-						pages.deleteObject(record.objectID, function (error, result) {
-							console.log('Object ' + record.objectID + ' has been deleted');
-						});
-					}
-					removeOldEntries();
-					return;
+		var processResults = processOne({
+			config: config,
+			url: url,
+			index: index
+		}, function (error, record) {
+			if (!!error || !record) {
+				console.error('Error! ' + error.message);
+				if (!!error.pageNotFound && !!record) {
+					pages.deleteObject(record.objectID, function (error, result) {
+						console.log('Object ' + record.objectID + ' has been deleted');
+					});
 				}
-				
-				pages.saveObject(record, function (error, result) {
-					if (!!error) {
-						console.log();
-						if (!!result && !!result.message) {
-							console.error('Error! ' + result.message);
-						}
-						if (!!error && !!error.message) {
-							console.error('Error! ' + error.message);
-						}
-						console.log();
-					} else if (record.objectID !== result.objectID) {
-						console.log();
-						console.error('Error! Object ID mismatch!');
-						console.log();
-					} else {
-						console.log('Object %s:%s saved (%s)', record.objectID, record.lang, record.url);
-					}
-					removeOldEntries();
-				});
-			});
-			if (!processResults.ok) {
-				console.error(processResults.message || 'Error!');
+				removeOldEntries();
+				return;
 			}
-		}, config.delayBetweenRequest * index);
+			
+			pages.saveObject(record, function (error, result) {
+				if (!!error) {
+					console.log();
+					if (!!result && !!result.message) {
+						console.error('Error! ' + result.message);
+					}
+					if (!!error && !!error.message) {
+						console.error('Error! ' + error.message);
+					}
+					console.log();
+				} else if (record.objectID !== result.objectID) {
+					console.log();
+					console.error('Error! Object ID mismatch!');
+					console.log();
+				} else {
+					console.log('Object %s:%s saved (%s)', record.objectID, record.lang, record.url);
+				}
+				removeOldEntries();
+			});
+		});
+		if (!processResults.ok) {
+			console.error(processResults.message || 'Error!');
+		}
 	});
 	
 	console.log('Sitemap %s registered %s / %s urls', sitemap.url, results.length, urls.length);
