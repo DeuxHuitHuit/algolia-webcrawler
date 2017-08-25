@@ -13,6 +13,7 @@ var fs = require('fs');
 var u = require('url');
 var _ = require('lodash');
 var algoliasearch = require('algoliasearch');
+var updateNotifier = require('update-notifier');
 
 var processOne = require('./lib/process');
 var sitemap = require('./lib/sitemap');
@@ -28,6 +29,11 @@ try {
 } catch (ex) {
 	config = null;
 }
+
+
+const pkg = require('./package.json');
+ 
+updateNotifier({pkg: pack}).notify();
 
 if (!_.isObject(config)) {
 	console.error('Invalid configuration');
