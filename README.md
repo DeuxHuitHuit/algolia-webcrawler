@@ -28,7 +28,8 @@ This script should be run via crontab in order to crawl the entire website at re
 url that contains all the url you want to be indexed.
 2. The sitemap(s) must contain at least the `<loc>` node, i.e. `urlset/url/loc`.
 3. An empty Algolia index.
-4. An Algolia Credential that can create objects and set settings on the index.
+4. An Algolia Credential that can create objects and set settings on the index, i.e.
+search, addObject, settings, browse, deleteObject, editSettings, deleteIndex
 
 ### Installation
 
@@ -217,4 +218,4 @@ Indexing is done automatically, at each run. To tweak how indexing works, please
 
 [MIT](http://deuxhuithuit.mit-license.org)    
 Made with love in Montréal by [Deux Huit Huit](https://deuxhuithuit.com)    
-Copyrights (c) 2014-2016
+Copyrights (c) 2014-2017
