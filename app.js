@@ -63,6 +63,8 @@ config.selectors = _.map(config.selectors, (selector, key) => {
 	};
 });
 
+const plugins = require('./lib/plugins')(__dirname, config.plugins);
+
 const client = algoliasearch(config.cred.appid, config.cred.apikey);
 const pages = client.initIndex(config.index.name);
 
@@ -111,7 +113,8 @@ sitemap(config, (sitemap, urls) => {
 		const processResults = processOne({
 			config,
 			url,
-			index
+			index,
+			plugins
 		}, (error, record) => {
 			if (!!error || !record) {
 				console.error('Error! ' + error.message);

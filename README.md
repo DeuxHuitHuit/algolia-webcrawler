@@ -184,7 +184,18 @@ The parse function used to format the value. Supported types are "integer", "flo
 
 The default value inserted for the specified key. Will be set if the value is falsy.
 
-#### blacklist: Array
+#### plugins: Array<String>
+
+A list of javascript files to load custom code before saving the record. The only requirement is to
+implement the following interface, where `record` is the object to be saved and data is the html.
+
+```js
+module.exports = (record, data) => {
+	record.value_from_plugin = 'Yay!';
+};
+```
+
+#### blacklist: Array<String>
 
 All url are checked against all items in the blacklist.
 If the complete url or its path component is in the blacklist, it won't get indexed.
