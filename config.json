@@ -22,7 +22,7 @@
 
 		}
 	},
-	"delayBetweenRequest": 100,
+	"delayBetweenRequests": 100,
 	"selectors": {
 		"title": "title",
 		"image": "meta[property=\"og:image\"]",

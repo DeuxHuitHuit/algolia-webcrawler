@@ -85,7 +85,7 @@ Your Algolia App ID.
 
 Your generated Algolia API key.
 
-#### delayBetweenRequest: Integer
+#### delayBetweenRequests: Integer
 
 Simple delay between each requests made to the website in milliseconds.
 
