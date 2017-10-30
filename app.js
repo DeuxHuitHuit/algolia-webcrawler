@@ -6,33 +6,32 @@
 
 'use strict';
 
-var argv = require('optimist').argv;
-var pack = require('./package.json');
-var path = require('path');
-var fs = require('fs');
-var u = require('url');
-var _ = require('lodash');
-var algoliasearch = require('algoliasearch');
-var updateNotifier = require('update-notifier');
+const argv = require('optimist').argv;
+const pack = require('./package.json');
+const path = require('path');
+const fs = require('fs');
+const u = require('url');
+const _ = require('lodash');
+const algoliasearch = require('algoliasearch');
+const updateNotifier = require('update-notifier');
 
-var processOne = require('./lib/process');
-var sitemap = require('./lib/sitemap');
-var dns = require('./lib/dns-cache');
-var sitemapProcessed = 0;
-var sitemapCount = 0;
-var urlCount = 0;
+const processOne = require('./lib/process');
+const sitemap = require('./lib/sitemap');
+const dns = require('./lib/dns-cache');
 
-var configFile = argv.config ? path.resolve(argv.config) : './config.json';
-var config = {};
+let sitemapProcessed = 0;
+let sitemapCount = 0;
+let urlCount = 0;
+
+const configFile = argv.config ? path.resolve(argv.config) : './config.json';
+let config = {};
 try {
 	config = require(configFile);
 } catch (ex) {
 	config = null;
 }
 
-
 const pkg = require('./package.json');
- 
 updateNotifier({pkg: pack}).notify();
 
 if (!_.isObject(config)) {
@@ -52,8 +51,20 @@ if (!_.isArray(config.sitemaps)) {
 	process.exit(8);
 }
 
-var client = algoliasearch(config.cred.appid, config.cred.apikey);
-var pages = client.initIndex(config.index.name);
+// Process map static selectors into their object equivalent
+config.selectors = _.map(config.selectors, (selector, key) => {
+	if (!_.isObject(selector)) {
+		selector = {selector};
+	}
+	return {
+		key,
+		attributes: selector.attributes,
+		selector: selector.selector
+	};
+});
+
+const client = algoliasearch(config.cred.appid, config.cred.apikey);
+const pages = client.initIndex(config.index.name);
 
 // Welcome
 console.log('Welcome to "%s" %s v%s', config.app, pack.name, pack.version);
@@ -62,7 +73,7 @@ console.log('Loaded "%s" configuration', configFile);
 console.log();
 
 // Launch sitemap crawling
-sitemap(config, function (sitemap, urls) {
+sitemap(config, (sitemap, urls) => {
 	sitemapProcessed++;
 	
 	if (!urls.length) {
@@ -71,12 +82,13 @@ sitemap(config, function (sitemap, urls) {
 	
 	console.log('Parsing Sitemap %s', sitemap.url);
 	
-	var totalCount = urls.length;
+	const totalCount = urls.length;
 	if (_.isArray(config.blacklist)) {
-		urls = _.filter(urls, function (url) {
-			return _.every(_.map(config.blacklist, function (bl) {
-				return url.url !== bl && u.parse(url.url).path !== bl;
-			}));
+		urls = _.filter(urls, (url) => {
+			return _.every(_.map(
+				config.blacklist,
+				(bl) => url.url !== bl && u.parse(url.url).path !== bl
+			));
 		});
 		if (totalCount != urls.length) {
 			console.log('%s blacklisted %d urls', sitemap.url, totalCount - urls.length);
@@ -94,17 +106,17 @@ sitemap(config, function (sitemap, urls) {
 		return;
 	}
 	
-	var results = _.map(urls, function (url, index) {
+	const results = _.map(urls, (url, index) => {
 		console.log('Registered ' + url.url);
-		var processResults = processOne({
-			config: config,
-			url: url,
-			index: index
-		}, function (error, record) {
+		const processResults = processOne({
+			config,
+			url,
+			index
+		}, (error, record) => {
 			if (!!error || !record) {
 				console.error('Error! ' + error.message);
 				if (!!error.pageNotFound && !!record) {
-					pages.deleteObject(record.objectID, function (error, result) {
+					pages.deleteObject(record.objectID, (error, result) => {
 						console.log('Object ' + record.objectID + ' has been deleted');
 					});
 				}
@@ -112,7 +124,7 @@ sitemap(config, function (sitemap, urls) {
 				return;
 			}
 			
-			pages.saveObject(record, function (error, result) {
+			pages.saveObject(record, (error, result) => {
 				if (!!error) {
 					console.log();
 					if (!!result && !!result.message) {
@@ -143,7 +155,7 @@ sitemap(config, function (sitemap, urls) {
 // Configure index
 if (_.isObject(config.index.settings)) {
 	console.log('Configuring your index %s', config.index.name);
-	pages.setSettings(config.index.settings, function (error, result) {
+	pages.setSettings(config.index.settings, (error, result) => {
 		if (!!error) {
 			console.log();
 			if (!!result && !!result.message) {
@@ -159,7 +171,7 @@ if (_.isObject(config.index.settings)) {
 	});
 }
 
-var removeOldEntries = function () {
+const removeOldEntries = () => {
 	urlCount++;
 	if (urlCount === sitemapCount) {
 		processOne.stop();
@@ -168,7 +180,7 @@ var removeOldEntries = function () {
 			console.log('Removing old entries...');
 			pages.deleteBy({
 				numericFilters: ['timestamp<' + (new Date().getTime() - config.oldentries)]
-			}, function (error, content) {
+			}, (error, content) => {
 				if (!!error) {
 					console.error('Error deleting entries.');
 					return;
