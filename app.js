@@ -166,7 +166,7 @@ var removeOldEntries = function () {
 		if (_.isInteger(config.oldentries) && config.oldentries > 0) {
 			console.log()
 			console.log('Removing old entries...');
-			pages.deleteByQuery('*', {
+			pages.deleteBy({
 				numericFilters: ['timestamp<' + (new Date().getTime() - config.oldentries)]
 			}, function (error, content) {
 				if (!!error) {
