@@ -1,4 +1,4 @@
-# Algolia Webcrawler ![David DM](https://david-dm.org/DeuxHuitHuit/algolia-webcrawler.png) [![npm version](https://badge.fury.io/js/algolia-webcrawler.svg)](http://badge.fury.io/js/algolia-webcrawler)
+# Algolia Webcrawler ![David DM](https://david-dm.org/DeuxHuitHuit/algolia-webcrawler.png) [![npm version](https://badge.fury.io/js/algolia-webcrawler.svg)](http://badge.fury.io/js/algolia-webcrawler) [![Build Status](https://travis-ci.org/DeuxHuitHuit/algolia-webcrawler.svg)](https://travis-ci.org/DeuxHuitHuit/algolia-webcrawler)
 
 Simple node worker that crawls sitemaps in order to keep an [Algolia](https://www.algolia.com/) index up-to-date.
 
