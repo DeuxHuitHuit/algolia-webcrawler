@@ -7,5 +7,5 @@ node_js:
 notifications:
   email: false
 script:
-  - npm i && npm test
+  - npm test
 
