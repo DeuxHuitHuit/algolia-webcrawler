@@ -95,6 +95,10 @@ The maximum number of seconds an entry can live without being updated. After
 each run, the app will search for old entries and delete them. If you do not
 wish to get rid of old entries, set this value to 0.
 
+#### maxRecordSize: Integer
+
+The maximum size in bytes of a record to be sent to Algolia. The default is 10,000 but could vary based on different plans.
+
 #### index: Object
 
 An object containing various values related to your index.
