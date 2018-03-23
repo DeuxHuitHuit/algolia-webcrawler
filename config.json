@@ -5,6 +5,7 @@
 		"apikey": "<ALGOLIA API KEY>"
 	},
 	"oldentries" : 86400000,
+	"maxRecordSize": 10000,
 	"index": {
 		"name": "<my index>",
 		"settings": {
@@ -29,7 +30,6 @@
 		"description": "meta[name=\"description\"]",
 		"text": "h1, h2, h3, h4, h5, h6, p, li"
 	},
-	"trimSize": 10000,
 	"formatters": {
 		"title": "-"
 	},
