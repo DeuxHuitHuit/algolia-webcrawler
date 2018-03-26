@@ -5,6 +5,7 @@
 		"apikey": "<ALGOLIA API KEY>"
 	},
 	"oldentries" : 86400000,
+	"maxRecordSize": 10000,
 	"index": {
 		"name": "<my index>",
 		"settings": {
