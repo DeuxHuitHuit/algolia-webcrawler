@@ -18,18 +18,18 @@
   "author": "deuxhuithuit",
   "license": "MIT",
   "dependencies": {
-    "algoliasearch": "^3.24.5",
-    "cheerio": "^0.22.0",
-    "html-entities": "^1.2.0",
-    "lodash": "^4.17.4",
+    "algoliasearch": "^3.26.0",
+    "cheerio": "^1.0.0-rc.2",
+    "html-entities": "^1.2.1",
+    "lodash": "^4.17.5",
     "md5": "^2.2.1",
     "optimist": "^0.6.1",
     "trim": "0.0.1",
-    "update-notifier": "^2.3.0"
+    "update-notifier": "^2.4.0"
   },
   "devDependencies": {
     "faucet": "0.0.1",
-    "tape": "^4.8.0",
+    "tape": "^4.9.0",
     "tape-catch": "^1.0.6"
   },
   "repository": {
