@@ -59,7 +59,8 @@ config.selectors = _.map(config.selectors, (selector, key) => {
 	return {
 		key,
 		attributes: selector.attributes,
-		selector: selector.selector
+		selector: selector.selector,
+		exclude: config.exclusions && config.exclusions[key]
 	};
 });
 

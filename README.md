@@ -167,6 +167,20 @@ CSS selector for the title of the page.
 
 CSS selector for the "key" property. You can add custom keys as you wish.
 
+### exclusions: Object
+
+An object containing CSS selectors to find elements that must not be indexed.
+Those CSS selectors are matched for each node and are check against all their parents to make
+sure non of its parent are excluded.
+
+#### exclusions.text: String
+
+CSS selector of excluded elements for the text of the page.
+
+#### exclusions[key]: String
+
+CSS selector of excluded elements for "key" property. The key must match the one used in selectors[key].
+
 #### formatters: Object
 
 An object containing formatter string. Their values are removed from the original result obtained

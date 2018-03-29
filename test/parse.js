@@ -43,6 +43,19 @@ test('Custom selector parse', (t) => {
 	t.end();
 });
 
+test('Selector exclusion parse', (t) => {
+	const rec = {};
+	const c = _.clone(config);
+	const data = `<html><body>
+	<a>test</a>
+	<footer><a class="no-ok">not-ok</a></footer>
+</body></html>`;
+	c.selectors.push({key: 'links', selector: 'a', exclude: 'footer'});
+	parse(rec, data, c);
+	t.equal(rec.links, 'test');
+	t.end();
+});
+
 test('JSON formatter', (t) => {
 	const rec = {};
 	const c = _.clone(config);
