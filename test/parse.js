@@ -19,7 +19,7 @@ test('Simple parse', (t) => {
 		date: now,
 		timestamp: now.getTime()
 	};
-	const c = _.clone(config);
+	const c = _.cloneDeep(config);
 	const data = `<html><head>
 	<title>test</title>
 <head></html>`;
@@ -32,7 +32,7 @@ test('Simple parse', (t) => {
 
 test('Custom selector parse', (t) => {
 	const rec = {};
-	const c = _.clone(config);
+	const c = _.cloneDeep(config);
 	const data = `<html>
 	<a class="test">test</a>
 	<a class="no-ok">not-ok</a>
@@ -45,7 +45,7 @@ test('Custom selector parse', (t) => {
 
 test('Selector exclusion parse', (t) => {
 	const rec = {};
-	const c = _.clone(config);
+	const c = _.cloneDeep(config);
 	const data = `<html><body>
 	<a>test</a>
 	<footer><a class="no-ok">not-ok</a></footer>
@@ -56,9 +56,22 @@ test('Selector exclusion parse', (t) => {
 	t.end();
 });
 
+test('Selector exclusion by data-attribute parse', (t) => {
+	const rec = {};
+	const c = _.cloneDeep(config);
+	const data = `<html><body>
+	<a>test</a>
+	<footer data-exclude><a class="no-ok">not-ok</a></footer>
+</body></html>`;
+	c.selectors.push({key: 'links', selector: 'a', exclude: '[data-exclude]'});
+	parse(rec, data, c);
+	t.equal(rec.links, 'test');
+	t.end();
+});
+
 test('JSON formatter', (t) => {
 	const rec = {};
-	const c = _.clone(config);
+	const c = _.cloneDeep(config);
 	const data = `<html>
 	<meta content='{"test":"1","tes2":0.4}'>
 </html>`;
