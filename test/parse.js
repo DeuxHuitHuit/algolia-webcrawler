@@ -102,3 +102,19 @@ test('JSON formatter', (t) => {
 	t.equal(rec.json.tes2, 0.4);
 	t.end();
 });
+
+test('Simple parse no spaces', (t) => {
+	const rec = {
+		date: now,
+		timestamp: now.getTime()
+	};
+	const c = _.cloneDeep(config);
+	const data = `<html><head>
+	<title>test-test-test-test</title>
+<head></html>`;
+	parse(rec, data, c);
+	t.equal(rec.date, now);
+	t.equal(rec.timestamp, now.getTime());
+	t.equal(rec.title, 'test-test-test-test');
+	t.end();
+});
