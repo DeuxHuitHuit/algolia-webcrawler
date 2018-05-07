@@ -14,6 +14,7 @@ const u = require('url');
 const _ = require('lodash');
 const algoliasearch = require('algoliasearch');
 const updateNotifier = require('update-notifier');
+const chalk = require('chalk');
 
 const processOne = require('./lib/process');
 const sitemap = require('./lib/sitemap');
@@ -71,9 +72,9 @@ config.selectors = _.map(config.selectors, (selector, key) => {
 });
 
 const plugins = require('./lib/plugins')(__dirname, config.plugins);
-
 const client = algoliasearch(config.cred.appid, config.cred.apikey);
 const pages = client.initIndex(config.index.name);
+const errors = [];
 
 // Welcome
 console.log('Welcome to "%s" %s v%s', config.app, pack.name, pack.version);
@@ -86,6 +87,11 @@ sitemap(config, (sitemap, urls) => {
 	sitemapProcessed++;
 	
 	if (!urls.length) {
+		errors.push({
+			ok: 'warn',
+			msg: 'Sitemap does not contain any urls',
+			sitemap
+		});
 		console.log('Sitemap %s does not contain any urls', sitemap.url);
 	}
 	
@@ -123,14 +129,18 @@ sitemap(config, (sitemap, urls) => {
 			index,
 			plugins
 		}, (error, record) => {
+			const id = urlCount + 1;
 			if (!!error || !record) {
-				console.error('Error! ' + error.message);
+				console.error('%d - Error! %s', id, error.message);
+				if (!!error) {
+					errors.push(error);
+				}
 				if (!!error.pageNotFound && !!record) {
 					pages.deleteObject(record.objectID, (error, result) => {
-						console.log('Object ' + record.objectID + ' has been deleted');
+						console.log('%d - Deleted %s:%s (%s)', id, record.objectID, record.lang, record.url);
 					});
 				}
-				removeOldEntries();
+				tearDown();
 				return;
 			}
 			
@@ -138,23 +148,30 @@ sitemap(config, (sitemap, urls) => {
 				if (!!error) {
 					console.log();
 					if (!!result && !!result.message) {
-						console.error('Error! ' + result.message);
+						console.error('%d - Error! %s', id, result.message);
+						errors.push(result);
 					}
 					if (!!error && !!error.message) {
-						console.error('Error! ' + error.message);
+						console.error('%d - Error! %s', id, error.message);
+						errors.push(error);
 					}
 					console.log();
 				} else if (record.objectID !== result.objectID) {
 					console.log();
-					console.error('Error! Object ID mismatch!');
+					console.error('%d - Error! Object ID mismatch!', id);
 					console.log();
+					errors.push({
+						ok: false,
+						message: 'Object ID mismatch!'
+					});
 				} else {
-					console.log('Object %s:%s saved (%s)', record.objectID, record.lang, record.url);
+					console.log('%d - Saved %s:%s (%s)', id, record.objectID, record.lang, record.url);
 				}
-				removeOldEntries();
+				tearDown();
 			});
 		});
-		if (!processResults.ok) {
+		if (processResults.ok !== true) {
+			errors.push(processResults);
 			console.error(processResults.message || 'Error!');
 		}
 	});
@@ -182,21 +199,45 @@ if (_.isObject(config.index.settings)) {
 }
 
 const removeOldEntries = () => {
+	if (_.isInteger(config.oldentries) && config.oldentries > 0) {
+		console.log();
+		console.log('Removing old entries...');
+		console.log();
+		pages.deleteBy({
+			numericFilters: ['timestamp<' + (new Date().getTime() - config.oldentries)]
+		}, (error, content) => {
+			if (!!error) {
+				console.error(chalk.red('Error deleting entries.'));
+				return;
+			}
+			console.log(chalk.green('Deleting old entries done.'));
+		});
+	}
+};
+
+const displayErrorReport = () => {
+	console.log();
+	if (!errors.length) {
+		console.log(chalk.green('No error were reported during the crawl!'));
+	} else {
+		console.log(chalk.yellow('%d errors occurred during the crawl'), errors.length);
+		_.forEach(errors, (e) => {
+			const isWarn = e.ok === 'warn';
+			const fx = isWarn ? 'warn' : 'error';
+			const c = isWarn ? chalk.yellow: chalk.red;
+			console[fx](c(message));
+			if (!isWarn) {
+				returnCode = ERROR_EXIT_CODE;
+			}
+		});
+	}
+};
+
+const tearDown = () => {
 	urlCount++;
 	if (urlCount === sitemapCount) {
 		processOne.stop();
-		if (_.isInteger(config.oldentries) && config.oldentries > 0) {
-			console.log()
-			console.log('Removing old entries...');
-			pages.deleteBy({
-				numericFilters: ['timestamp<' + (new Date().getTime() - config.oldentries)]
-			}, (error, content) => {
-				if (!!error) {
-					console.error('Error deleting entries.');
-					return;
-				}
-				console.log('Deleting old entries done.');
-			});
-		}
+		removeOldEntries();
+		displayErrorReport();
 	}
 };
