@@ -23,6 +23,12 @@ let sitemapProcessed = 0;
 let sitemapCount = 0;
 let urlCount = 0;
 
+const ERROR_EXIT_CODE = 10;
+let returnCode = 0;
+process.on('exit', () => {
+	process.exit(returnCode);
+});
+
 const configFile = argv.config ? path.resolve(argv.config) : './config.json';
 let config = {};
 try {
