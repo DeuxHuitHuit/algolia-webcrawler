@@ -5,6 +5,9 @@ environment:
     - nodejs_version: "8"
     - nodejs_version: "9"
     - nodejs_version: "10"
+matrix:
+  allow_failures:
+    - nodejs_version: "10"
 
 # Install scripts. (runs after repo cloning)
 install:
