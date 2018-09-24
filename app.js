@@ -72,6 +72,7 @@ config.selectors = _.map(config.selectors, (selector, key) => {
 });
 
 const plugins = require('./lib/plugins')(__dirname, config.plugins);
+const pingback = require('./lib/pingback')({url: config.pingbackUrl});
 const client = algoliasearch(config.cred.appid, config.cred.apikey);
 const pages = client.initIndex(config.index.name);
 const errors = [];
@@ -80,6 +81,19 @@ const errors = [];
 console.log('Welcome to "%s" %s v%s', config.app, pack.name, pack.version);
 console.log();
 console.log('Loaded "%s" configuration', configFile);
+console.log();
+
+//Show info about pingback configuration
+if (pingback.ok == false) {
+	console.log('No ping back url configured or bad url.');
+	console.log(pingback.error);
+	console.log();
+} else {
+	console.log('Ping back url configured with: ' + config.pingbackUrl);
+	console.log();
+}
+
+//Add empty line
 console.log();
 
 // Launch sitemap crawling
@@ -170,14 +184,46 @@ sitemap(config, (sitemap, urls) => {
 				tearDown();
 			});
 		});
+
 		if (processResults.ok !== true) {
 			errors.push(processResults);
 			console.error(processResults.message || 'Error!');
+
+			//Post error to ping back url if configured
+			pingbackUrl({
+				result: 'error',
+				action: 'update',
+				url: processResults.url
+			});
+		} else {
+
+			//Post success to ping back url if configured
+			pingbackUrl({
+				result: 'success',
+				action: 'update',
+				url: processResults.url
+			});
 		}
 	});
 	
 	console.log('Sitemap %s registered %s / %s urls', sitemap.url, results.length, urls.length);
 });
+
+const pingbackUrl = (data) => {
+	//Process pingBack
+	pingback.send({result: data.result, action: data.action, url: data.url}, (data) => {
+		if (data.ok) {
+			console.log('Ping back executed.');
+		} else {
+			console.log('Ping back error: ');
+			if (data.err) {
+				console.dir(data.err);
+			} else {
+				console.log(data.message);
+			}
+		}
+	});
+};
 
 // Configure index
 if (_.isObject(config.index.settings)) {
