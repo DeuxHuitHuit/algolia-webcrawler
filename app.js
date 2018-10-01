@@ -84,11 +84,7 @@ console.log('Loaded "%s" configuration', configFile);
 console.log();
 
 //Show info about pingback configuration
-if (pingback.ok == false) {
-	console.log('No ping back url configured or bad url.');
-	console.log(pingback.error);
-	console.log();
-} else {
+if (pingback.ok) {
 	console.log('Ping back url configured with: ' + config.pingbackUrl);
 	console.log();
 }
