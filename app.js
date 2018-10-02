@@ -153,24 +153,30 @@ sitemap(config, (sitemap, urls) => {
 							action: 'delete',
 							url: url.url,
 							callback: tearDown
-						});
+					});
 					});
 				}
 				return;
 			}
 			
-			pages.saveObject(record, (error, result) => {
-				if (!!error) {
-					console.log();
-					if (!!result && !!result.message) {
-						console.error('%d - Error! %s', id, result.message);
-						errors.push(result);
-					}
-					if (!!error && !!error.message) {
-						console.error('%d - Error! %s', id, error.message);
-						errors.push(error);
-					}
-					console.log();
+			if (record.action === 'delete') {
+				pages.deleteObject(record.objectID, (error, result) => {
+					console.log('%d - Quick action Deleted %s (%s)', id, record.objectID, record.url);
+					tearDown();
+				});
+			} else {
+				pages.saveObject(record, (error, result) => {
+					if (!!error) {
+						console.log();
+						if (!!result && !!result.message) {
+							console.error('%d - Error! %s', id, result.message);
+							errors.push(result);
+						}
+						if (!!error && !!error.message) {
+							console.error('%d - Error! %s', id, error.message);
+							errors.push(error);
+						}
+						console.log();
 
 					//Ping back error
 					//Post error to ping back url if configured
@@ -181,14 +187,14 @@ sitemap(config, (sitemap, urls) => {
 						url: url.url,
 						callback: tearDown
 					});
-				} else if (record.objectID !== result.objectID) {
-					console.log();
-					console.error('%d - Error! Object ID mismatch!', id);
-					console.log();
-					errors.push({
-						ok: false,
-						message: 'Object ID mismatch!'
-					});
+					} else if (record.objectID !== result.objectID) {
+						console.log();
+						console.error('%d - Error! Object ID mismatch!', id);
+						console.log();
+						errors.push({
+							ok: false,
+							message: 'Object ID mismatch!'
+						});
 					//Ping back error
 					pingbackUrl({
 						id: id,
@@ -197,8 +203,8 @@ sitemap(config, (sitemap, urls) => {
 						url: url.url,
 						callback: tearDown
 					});
-				} else {
-					console.log('%d - Saved %s:%s (%s)', id, record.objectID, record.lang, record.url);
+					} else {
+						console.log('%d - Saved %s:%s (%s)', id, record.objectID, record.lang, record.url);
 
 					//Ping back saved
 					pingbackUrl({
@@ -208,8 +214,9 @@ sitemap(config, (sitemap, urls) => {
 						url: url.url,
 						callback: tearDown
 					});
-				}
-			});
+					}
+				});
+			}
 		});
 
 		if (processResults.ok !== true) {
@@ -302,5 +309,7 @@ const tearDown = () => {
 		processOne.stop();
 		removeOldEntries();
 		displayErrorReport();
+	} else {
+		processOne.resume();
 	}
 };
