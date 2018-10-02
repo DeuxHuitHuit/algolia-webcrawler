@@ -85,7 +85,7 @@ console.log();
 
 //Show info about pingback configuration
 if (pingback.ok) {
-	console.log('Ping back url configured with: ' + config.pingbackUrl);
+	console.log('Ping back url configured with: %s', config.pingbackUrl);
 	console.log();
 }
 
@@ -148,9 +148,16 @@ sitemap(config, (sitemap, urls) => {
 				if (!!error.pageNotFound && !!record) {
 					pages.deleteObject(record.objectID, (error, result) => {
 						console.log('%d - Deleted %s:%s (%s)', id, record.objectID, record.lang, record.url);
+
+						//Ping back delete
+						pingbackUrl({
+							id, id,
+							result: 'success',
+							action: 'delete',
+							url: url.url
+						}, tearDown);
 					});
 				}
-				tearDown();
 				return;
 			}
 			
@@ -166,6 +173,15 @@ sitemap(config, (sitemap, urls) => {
 						errors.push(error);
 					}
 					console.log();
+
+					//Ping back error
+					//Post error to ping back url if configured
+					pingbackUrl({
+						id: id,
+						result: 'error',
+						action: 'update',
+						url: url.url
+					}, tearDown);
 				} else if (record.objectID !== result.objectID) {
 					console.log();
 					console.error('%d - Error! Object ID mismatch!', id);
@@ -174,51 +190,55 @@ sitemap(config, (sitemap, urls) => {
 						ok: false,
 						message: 'Object ID mismatch!'
 					});
+					//Ping back error
+					pingbackUrl({
+						id: id,
+						result: 'error',
+						action: 'update',
+						url: url.url
+					}, tearDown);
 				} else {
 					console.log('%d - Saved %s:%s (%s)', id, record.objectID, record.lang, record.url);
+
+					//Ping back saved
+					pingbackUrl({
+						id: id,
+						result: 'success',
+						action: 'update',
+						url: url.url
+					}, tearDown);
 				}
-				tearDown();
 			});
 		});
 
 		if (processResults.ok !== true) {
 			errors.push(processResults);
 			console.error(processResults.message || 'Error!');
-
-			//Post error to ping back url if configured
-			pingbackUrl({
-				result: 'error',
-				action: 'update',
-				url: processResults.url
-			});
-		} else {
-
-			//Post success to ping back url if configured
-			pingbackUrl({
-				result: 'success',
-				action: 'update',
-				url: processResults.url
-			});
 		}
 	});
 	
 	console.log('Sitemap %s registered %s / %s urls', sitemap.url, results.length, urls.length);
 });
 
-const pingbackUrl = (data) => {
+const pingbackUrl = (data, cb) => {
 	//Process pingBack
-	pingback.send({result: data.result, action: data.action, url: data.url}, (data) => {
-		if (data.ok) {
-			console.log('Ping back executed.');
-		} else {
-			console.log('Ping back error: ');
-			if (data.err) {
-				console.dir(data.err);
+	if (pingback.ok) {
+		pingback.send({result: data.result, action: data.action, url: data.url}, (data2) => {
+			if (data2.ok) {
+				console.log('%d - Ping back executed: %s :%s', data.id, data.action, data.url);
 			} else {
-				console.log(data.message);
+				console.log('%d - Ping back error: ', data.id);
+				if (data2.err) {
+					console.dir(data2.err);
+				} else {
+					console.log(data2.message);
+				}
 			}
-		}
-	});
+			cb();
+		});
+	} else {
+		cb();
+	}
 };
 
 // Configure index
