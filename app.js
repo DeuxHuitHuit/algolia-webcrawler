@@ -151,8 +151,9 @@ sitemap(config, (sitemap, urls) => {
 							id, id,
 							result: 'success',
 							action: 'delete',
-							url: url.url
-						}, tearDown);
+							url: url.url,
+							callback: tearDown
+						});
 					});
 				}
 				return;
@@ -177,8 +178,9 @@ sitemap(config, (sitemap, urls) => {
 						id: id,
 						result: 'error',
 						action: 'update',
-						url: url.url
-					}, tearDown);
+						url: url.url,
+						callback: tearDown
+					});
 				} else if (record.objectID !== result.objectID) {
 					console.log();
 					console.error('%d - Error! Object ID mismatch!', id);
@@ -192,8 +194,9 @@ sitemap(config, (sitemap, urls) => {
 						id: id,
 						result: 'error',
 						action: 'update',
-						url: url.url
-					}, tearDown);
+						url: url.url,
+						callback: tearDown
+					});
 				} else {
 					console.log('%d - Saved %s:%s (%s)', id, record.objectID, record.lang, record.url);
 
@@ -202,8 +205,9 @@ sitemap(config, (sitemap, urls) => {
 						id: id,
 						result: 'success',
 						action: 'update',
-						url: url.url
-					}, tearDown);
+						url: url.url,
+						callback: tearDown
+					});
 				}
 			});
 		});
@@ -217,7 +221,7 @@ sitemap(config, (sitemap, urls) => {
 	console.log('Sitemap %s registered %s / %s urls', sitemap.url, results.length, urls.length);
 });
 
-const pingbackUrl = (data, cb) => {
+const pingbackUrl = (data) => {
 	//Process pingBack
 	if (pingback.ok) {
 		pingback.send({result: data.result, action: data.action, url: data.url}, (data2) => {
@@ -231,10 +235,10 @@ const pingbackUrl = (data, cb) => {
 					console.log(data2.message);
 				}
 			}
-			cb();
+			data.callback();
 		});
 	} else {
-		cb();
+		data.callback();
 	}
 };
 
