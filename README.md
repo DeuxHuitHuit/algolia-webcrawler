@@ -255,7 +255,7 @@ The web server will receive a post with this information :
 	result=[success|error]
 	action=[update|delete]
 	url=the url inserted
-	source=”algolia-crawler”
+	source=algolia-crawler
 ````
 
 ### Indexing
