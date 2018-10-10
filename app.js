@@ -89,9 +89,6 @@ if (pingback.ok) {
 	console.log();
 }
 
-//Add empty line
-console.log();
-
 // Launch sitemap crawling
 sitemap(config, (sitemap, urls) => {
 	sitemapProcessed++;
