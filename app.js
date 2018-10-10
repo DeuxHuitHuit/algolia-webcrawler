@@ -161,7 +161,7 @@ sitemap(config, (sitemap, urls) => {
 			
 			if (record.action === 'delete') {
 				pages.deleteObject(record.objectID, (error, result) => {
-					console.log('%d - Quick action Deleted %s (%s)', id, record.objectID, record.url);
+					console.log('%d - Action Deleted %s:%s (%s)', id, record.objectID, record.lang, record.url);
 					tearDown();
 				});
 			} else {
