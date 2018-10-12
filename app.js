@@ -72,6 +72,7 @@ config.selectors = _.map(config.selectors, (selector, key) => {
 });
 
 const plugins = require('./lib/plugins')(__dirname, config.plugins);
+const pingback = require('./lib/pingback')({url: config.pingbackUrl});
 const client = algoliasearch(config.cred.appid, config.cred.apikey);
 const pages = client.initIndex(config.index.name);
 const errors = [];
@@ -81,6 +82,12 @@ console.log('Welcome to "%s" %s v%s', config.app, pack.name, pack.version);
 console.log();
 console.log('Loaded "%s" configuration', configFile);
 console.log();
+
+//Show info about pingback configuration
+if (pingback.ok) {
+	console.log('Ping back url configured with: %s', config.pingbackUrl);
+	console.log();
+}
 
 // Launch sitemap crawling
 sitemap(config, (sitemap, urls) => {
@@ -138,9 +145,17 @@ sitemap(config, (sitemap, urls) => {
 				if (!!error.pageNotFound && !!record) {
 					pages.deleteObject(record.objectID, (error, result) => {
 						console.log('%d - Deleted %s:%s (%s)', id, record.objectID, record.lang, record.url);
+
+						//Ping back delete
+						pingbackUrl({
+							id, id,
+							result: 'success',
+							action: 'delete',
+							url: url.url,
+							callback: tearDown
+						});
 					});
 				}
-				tearDown();
 				return;
 			}
 			
@@ -156,6 +171,16 @@ sitemap(config, (sitemap, urls) => {
 						errors.push(error);
 					}
 					console.log();
+
+					//Ping back error
+					//Post error to ping back url if configured
+					pingbackUrl({
+						id: id,
+						result: 'error',
+						action: 'update',
+						url: url.url,
+						callback: tearDown
+					});
 				} else if (record.objectID !== result.objectID) {
 					console.log();
 					console.error('%d - Error! Object ID mismatch!', id);
@@ -164,12 +189,29 @@ sitemap(config, (sitemap, urls) => {
 						ok: false,
 						message: 'Object ID mismatch!'
 					});
+					//Ping back error
+					pingbackUrl({
+						id: id,
+						result: 'error',
+						action: 'update',
+						url: url.url,
+						callback: tearDown
+					});
 				} else {
 					console.log('%d - Saved %s:%s (%s)', id, record.objectID, record.lang, record.url);
+
+					//Ping back saved
+					pingbackUrl({
+						id: id,
+						result: 'success',
+						action: 'update',
+						url: url.url,
+						callback: tearDown
+					});
 				}
-				tearDown();
 			});
 		});
+
 		if (processResults.ok !== true) {
 			errors.push(processResults);
 			console.error(processResults.message || 'Error!');
@@ -178,6 +220,27 @@ sitemap(config, (sitemap, urls) => {
 	
 	console.log('Sitemap %s registered %s / %s urls', sitemap.url, results.length, urls.length);
 });
+
+const pingbackUrl = (data) => {
+	//Process pingBack
+	if (pingback.ok) {
+		pingback.send({result: data.result, action: data.action, url: data.url}, (data2) => {
+			if (data2.ok) {
+				console.log('%d - Ping back executed: %s :%s', data.id, data.action, data.url);
+			} else {
+				console.log('%d - Ping back error: ', data.id);
+				if (data2.err) {
+					console.dir(data2.err);
+				} else {
+					console.log(data2.message);
+				}
+			}
+			data.callback();
+		});
+	} else {
+		data.callback();
+	}
+};
 
 // Configure index
 if (_.isObject(config.index.settings)) {

@@ -45,6 +45,7 @@
 	"plugins": [
 		
 	],
+	"pingbackUrl": "",
 	"blacklist": [
 		
 	]

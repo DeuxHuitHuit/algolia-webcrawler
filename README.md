@@ -246,6 +246,18 @@ The stored object on Algolia's server is as follows
 One thing to notice is that text is an array, since we tried to preserve the original text
 node -> actual value relationship. Algolia handle this just fine.
 
+### pingbackUrl
+
+One url can be set to post a ping back to a web server after every saved url in Algolia.
+The web server will receive a post with this information : 
+
+````html
+	result=[success|error]
+	action=[update|delete]
+	url=the url inserted
+	source=algolia-crawler
+````
+
 ### Indexing
 
 Indexing is done automatically, at each run. To tweak how indexing works, please see the
