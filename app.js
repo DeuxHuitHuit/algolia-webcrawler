@@ -171,10 +171,25 @@ sitemap(config, (sitemap, urls) => {
 							console.error('%d - Error! %s', id, error.message);
 							errors.push(error);
 						}
+						//Ping back delete
+						pingbackUrl({
+							id, id,
+							result: 'error',
+							action: 'delete',
+							url: record.url,
+							callback: tearDown
+						});
 					} else {
 						console.log('%d - Action Deleted %s:%s (%s)', id, record.objectID, record.lang, record.url);
+						//Ping back delete
+						pingbackUrl({
+							id, id,
+							result: 'success',
+							action: 'delete',
+							url: record.url,
+							callback: tearDown
+						});
 					}
-					tearDown();
 				});
 			} else {
 				pages.saveObject(record, (error, result) => {
