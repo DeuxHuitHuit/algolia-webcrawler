@@ -176,7 +176,7 @@ sitemap(config, (sitemap, urls) => {
 							id, id,
 							result: 'error',
 							action: 'delete',
-							url: record.url,
+							url: url.url,
 							callback: tearDown
 						});
 					} else {
@@ -186,7 +186,7 @@ sitemap(config, (sitemap, urls) => {
 							id, id,
 							result: 'success',
 							action: 'delete',
-							url: record.url,
+							url: url.url,
 							callback: tearDown
 						});
 					}
@@ -222,7 +222,7 @@ sitemap(config, (sitemap, urls) => {
 							ok: false,
 							message: 'Object ID mismatch!'
 						});
-						
+
 						//Ping back error
 						pingbackUrl({
 							id: id,
