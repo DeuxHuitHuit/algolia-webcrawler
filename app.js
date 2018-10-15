@@ -180,7 +180,7 @@ sitemap(config, (sitemap, urls) => {
 							callback: tearDown
 						});
 					} else {
-						console.log('%d - Action Deleted %s:%s (%s)', id, record.objectID, record.lang, record.url);
+						console.log('%d - Deleted %s:%s (%s)', id, record.objectID, record.lang, record.url);
 						//Ping back delete
 						pingbackUrl({
 							id, id,
