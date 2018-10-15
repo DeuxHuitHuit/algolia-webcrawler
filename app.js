@@ -205,15 +205,15 @@ sitemap(config, (sitemap, urls) => {
 						}
 						console.log();
 
-					//Ping back error
-					//Post error to ping back url if configured
-					pingbackUrl({
-						id: id,
-						result: 'error',
-						action: 'update',
-						url: url.url,
-						callback: tearDown
-					});
+						//Ping back error
+						//Post error to ping back url if configured
+						pingbackUrl({
+							id: id,
+							result: 'error',
+							action: 'update',
+							url: url.url,
+							callback: tearDown
+						});
 					} else if (record.objectID !== result.objectID) {
 						console.log();
 						console.error('%d - Error! Object ID mismatch!', id);
