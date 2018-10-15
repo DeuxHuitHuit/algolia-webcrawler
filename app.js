@@ -222,25 +222,26 @@ sitemap(config, (sitemap, urls) => {
 							ok: false,
 							message: 'Object ID mismatch!'
 						});
-					//Ping back error
-					pingbackUrl({
-						id: id,
-						result: 'error',
-						action: 'update',
-						url: url.url,
-						callback: tearDown
-					});
+						
+						//Ping back error
+						pingbackUrl({
+							id: id,
+							result: 'error',
+							action: 'update',
+							url: url.url,
+							callback: tearDown
+						});
 					} else {
 						console.log('%d - Saved %s:%s (%s)', id, record.objectID, record.lang, record.url);
 
-					//Ping back saved
-					pingbackUrl({
-						id: id,
-						result: 'success',
-						action: 'update',
-						url: url.url,
-						callback: tearDown
-					});
+						//Ping back saved
+						pingbackUrl({
+							id: id,
+							result: 'success',
+							action: 'update',
+							url: url.url,
+							callback: tearDown
+						});
 					}
 				});
 			}
