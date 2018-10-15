@@ -153,7 +153,7 @@ sitemap(config, (sitemap, urls) => {
 							action: 'delete',
 							url: url.url,
 							callback: tearDown
-					});
+						});
 					});
 				}
 				return;
