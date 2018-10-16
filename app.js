@@ -26,8 +26,8 @@ let urlCount = 0;
 
 const ERROR_EXIT_CODE = 10;
 let returnCode = 0;
-process.on('exit', () => {
-	process.exit(returnCode);
+process.on('exit', (r) => {
+	process.nextTick(() => process.exit(returnCode || r));
 });
 
 const configFile = argv.config ? path.resolve(argv.config) : './config.json';
