@@ -159,57 +159,92 @@ sitemap(config, (sitemap, urls) => {
 				return;
 			}
 			
-			pages.saveObject(record, (error, result) => {
-				if (!!error) {
-					console.log();
-					if (!!result && !!result.message) {
-						console.error('%d - Error! %s', id, result.message);
-						errors.push(result);
+			if (record.action === 'delete') {
+				pages.deleteObject(record.objectID, (error, result) => {
+					if (!!error) {
+						console.log();
+						if (!!result && !!result.message) {
+							console.error('%d - Error! %s', id, result.message);
+							errors.push(result);
+						}
+						if (!!error && !!error.message) {
+							console.error('%d - Error! %s', id, error.message);
+							errors.push(error);
+						}
+						//Ping back delete
+						pingbackUrl({
+							id, id,
+							result: 'error',
+							action: 'delete',
+							url: url.url,
+							callback: tearDown
+						});
+					} else {
+						console.log('%d - Deleted %s:%s (%s)', id, record.objectID, record.lang, record.url);
+						//Ping back delete
+						pingbackUrl({
+							id, id,
+							result: 'success',
+							action: 'delete',
+							url: url.url,
+							callback: tearDown
+						});
 					}
-					if (!!error && !!error.message) {
-						console.error('%d - Error! %s', id, error.message);
-						errors.push(error);
+				});
+			} else {
+				pages.saveObject(record, (error, result) => {
+					if (!!error) {
+						console.log();
+						if (!!result && !!result.message) {
+							console.error('%d - Error! %s', id, result.message);
+							errors.push(result);
+						}
+						if (!!error && !!error.message) {
+							console.error('%d - Error! %s', id, error.message);
+							errors.push(error);
+						}
+						console.log();
+
+						//Ping back error
+						//Post error to ping back url if configured
+						pingbackUrl({
+							id: id,
+							result: 'error',
+							action: 'update',
+							url: url.url,
+							callback: tearDown
+						});
+					} else if (record.objectID !== result.objectID) {
+						console.log();
+						console.error('%d - Error! Object ID mismatch!', id);
+						console.log();
+						errors.push({
+							ok: false,
+							message: 'Object ID mismatch!'
+						});
+
+						//Ping back error
+						pingbackUrl({
+							id: id,
+							result: 'error',
+							action: 'update',
+							url: url.url,
+							callback: tearDown
+						});
+					} else {
+						console.log('%d - Saved %s:%s (%s)', id, record.objectID, record.lang, record.url);
+
+						//Ping back saved
+						pingbackUrl({
+							id: id,
+							result: 'success',
+							action: 'update',
+							url: url.url,
+							callback: tearDown
+						});
 					}
-					console.log();
-
-					//Ping back error
-					//Post error to ping back url if configured
-					pingbackUrl({
-						id: id,
-						result: 'error',
-						action: 'update',
-						url: url.url,
-						callback: tearDown
-					});
-				} else if (record.objectID !== result.objectID) {
-					console.log();
-					console.error('%d - Error! Object ID mismatch!', id);
-					console.log();
-					errors.push({
-						ok: false,
-						message: 'Object ID mismatch!'
-					});
-					//Ping back error
-					pingbackUrl({
-						id: id,
-						result: 'error',
-						action: 'update',
-						url: url.url,
-						callback: tearDown
-					});
-				} else {
-					console.log('%d - Saved %s:%s (%s)', id, record.objectID, record.lang, record.url);
-
-					//Ping back saved
-					pingbackUrl({
-						id: id,
-						result: 'success',
-						action: 'update',
-						url: url.url,
-						callback: tearDown
-					});
-				}
-			});
+				});
+			}
 		});
 
 		if (processResults.ok !== true) {
@@ -302,5 +337,7 @@ const tearDown = () => {
 		processOne.stop();
 		removeOldEntries();
 		displayErrorReport();
+	} else {
+		processOne.resume();
 	}
 };
