@@ -267,4 +267,4 @@ Indexing is done automatically, at each run. To tweak how indexing works, please
 
 [MIT](http://deuxhuithuit.mit-license.org)    
 Made with love in Montréal by [Deux Huit Huit](https://deuxhuithuit.com)    
-Copyrights (c) 2014-2017
+Copyrights (c) 2014-2018
