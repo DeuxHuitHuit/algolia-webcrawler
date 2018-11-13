@@ -73,7 +73,8 @@ config.selectors = _.map(config.selectors, (selector, key) => {
 
 const plugins = require('./lib/plugins')(__dirname, config.plugins);
 const pingback = require('./lib/pingback')({url: config.pingbackUrl});
-const client = algoliasearch(config.cred.appid, config.cred.apikey);
+const pingbackConfigUrl = config.pingbackUrl ? config.pingbackUrl : '';
+const pingback = require('./lib/pingback')({url: pingbackConfigUrl});
 const pages = client.initIndex(config.index.name);
 const errors = [];
 
@@ -92,7 +93,7 @@ if (pingback.ok) {
 // Launch sitemap crawling
 sitemap(config, (sitemap, urls) => {
 	sitemapProcessed++;
-	
+
 	if (!urls.length) {
 		errors.push({
 			ok: 'warn',
@@ -101,9 +102,9 @@ sitemap(config, (sitemap, urls) => {
 		});
 		console.log('Sitemap %s does not contain any urls', sitemap.url);
 	}
-	
+
 	console.log('Parsing Sitemap %s', sitemap.url);
-	
+
 	const totalCount = urls.length;
 	if (_.isArray(config.blacklist)) {
 		urls = _.filter(urls, (url) => {
@@ -116,7 +117,7 @@ sitemap(config, (sitemap, urls) => {
 			console.log('%s blacklisted %d urls', sitemap.url, totalCount - urls.length);
 		}
 	}
-	
+
 	sitemapCount += urls.length;
 
 	// All sitemaps have failed
@@ -127,7 +128,7 @@ sitemap(config, (sitemap, urls) => {
 		// Current sitemap failed, exit
 		return;
 	}
-	
+
 	const results = _.map(urls, (url, index) => {
 		console.log('Registered ' + url.url);
 		const processResults = processOne({
@@ -158,7 +159,7 @@ sitemap(config, (sitemap, urls) => {
 				}
 				return;
 			}
-			
+
 			if (record.action === 'delete') {
 				pages.deleteObject(record.objectID, (error, result) => {
 					if (!!error) {
@@ -252,7 +253,7 @@ sitemap(config, (sitemap, urls) => {
 			console.error(processResults.message || 'Error!');
 		}
 	});
-	
+
 	console.log('Sitemap %s registered %s / %s urls', sitemap.url, results.length, urls.length);
 });
 
