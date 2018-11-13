@@ -324,9 +324,7 @@ const displayErrorReport = () => {
 			const isWarn = e.ok === 'warn';
 			const fx = isWarn ? 'warn' : 'error';
 			const c = isWarn ? chalk.yellow: chalk.red;
-			if (! _.isUndefined(message)) {
-				console[fx](c(message));
-			}
+			console[fx](c(message));
 			if (!isWarn) {
 				returnCode = ERROR_EXIT_CODE;
 			}
