@@ -236,6 +236,7 @@ The stored object on Algolia's server is as follows
 	url: 'http://...',
 	objectID: shasum.digest('base64'),
 	lang: sitemap.lang,
+	http: {},
 	title: '',
 	description: '',
 	image: '',
