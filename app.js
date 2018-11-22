@@ -240,6 +240,7 @@ sitemap(config, (sitemap, urls) => {
 							result: 'success',
 							action: 'update',
 							url: url.url,
+							lastModified: record.http.lastModified,
 							callback: tearDown
 						});
 					}
@@ -259,7 +260,12 @@ sitemap(config, (sitemap, urls) => {
 const pingbackUrl = (data) => {
 	//Process pingBack
 	if (pingback.ok) {
-		pingback.send({result: data.result, action: data.action, url: data.url}, (data2) => {
+		pingback.send({
+			result: data.result,
+			action: data.action,
+			url: data.url,
+			lastModified: data.lastModified
+		}, (data2) => {
 			if (data2.ok) {
 				console.log('%d - Ping back executed: %s :%s', data.id, data.action, data.url);
 			} else {
