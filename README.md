@@ -236,6 +236,7 @@ The stored object on Algolia's server is as follows
 	url: 'http://...',
 	objectID: shasum.digest('base64'),
 	lang: sitemap.lang,
+	http: {},
 	title: '',
 	description: '',
 	image: '',
@@ -255,6 +256,7 @@ The web server will receive a post with this information :
 	result=[success|error]
 	action=[update|delete]
 	url=the url inserted
+	last-modified=[the http header value]
 	source=algolia-crawler
 ````
 
