@@ -142,7 +142,7 @@ sitemap(config, (sitemap, urls) => {
 				if (!!error) {
 					errors.push(error);
 				}
-				if (!!error.pageNotFound && !!record) {
+				if ((!!error.pageNotFound || !!error.pageRedirected) && !!record) {
 					pages.deleteObject(record.objectID, (error, result) => {
 						console.log('%d - Deleted %s:%s (%s)', id, record.objectID, record.lang, record.url);
 
