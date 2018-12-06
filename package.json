@@ -1,6 +1,6 @@
 {
   "name": "algolia-webcrawler",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "description": "Simple node worker that crawls sitemaps in order to keep an algolia index up-to-date.",
   "main": "app.js",
   "scripts": {
@@ -18,7 +18,7 @@
   "author": "deuxhuithuit",
   "license": "MIT",
   "dependencies": {
-    "algoliasearch": "^3.30.0",
+    "algoliasearch": "^3.31.0",
     "chalk": "^2.4.1",
     "cheerio": "^1.0.0-rc.2",
     "html-entities": "^1.2.1",
