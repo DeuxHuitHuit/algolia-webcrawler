@@ -155,6 +155,15 @@ sitemap(config, (sitemap, urls) => {
 							callback: tearDown
 						});
 					});
+				} else {
+					//Ping back delete
+					pingbackUrl({
+						id, id,
+						result: 'success',
+						action: 'delete',
+						url: url.url,
+						callback: tearDown
+					});
 				}
 				return;
 			}
