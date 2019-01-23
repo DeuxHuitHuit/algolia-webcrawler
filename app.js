@@ -125,6 +125,7 @@ sitemap(config, (sitemap, urls) => {
 	if (sitemapProcessed === config.sitemaps.length && sitemapCount === 0) {
 		console.log('All Sitemaps do not contain any urls');
 		process.exit(16);
+	// All sitemaps are parsed, kick in the process
 	} else if (sitemapProcessed === config.sitemaps.length) {
 		processOne.start();
 	}
