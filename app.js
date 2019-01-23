@@ -155,6 +155,14 @@ sitemap(config, (sitemap, urls) => {
 							callback: tearDown
 						});
 					});
+				} else if (!!error.retry) {
+					processOne({
+						config,
+						url,
+						index,
+						plugins,
+						isRetry: true
+					});
 				} else {
 					//Ping back delete
 					pingbackUrl({
