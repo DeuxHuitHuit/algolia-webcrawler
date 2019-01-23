@@ -6,3 +6,4 @@ require('./sitemap');
 require('./parse');
 require('./process');
 require('./types');
+require('./defaults');
