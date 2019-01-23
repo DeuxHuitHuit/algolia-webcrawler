@@ -316,11 +316,15 @@ const removeOldEntries = () => {
 		console.log();
 		console.log('Removing old entries...');
 		console.log();
-		pages.deleteBy({
+		const deleteQuery = {
 			numericFilters: ['timestamp<' + (new Date().getTime() - config.oldentries)]
-		}, (error, content) => {
+		};
+		if (!!config.oldentriesfilters) {
+			deleteQuery.filters = config.oldentriesfilters;
+		}
+		pages.deleteBy(deleteQuery, (error, content) => {
 			if (!!error) {
-				console.error(chalk.red('Error deleting entries.'));
+				console.error(chalk.red('Error deleting entries. ' + error.message));
 				return;
 			}
 			console.log(chalk.green('Deleting old entries done.'));

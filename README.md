@@ -103,6 +103,12 @@ The maximum number of seconds an entry can live without being updated. After
 each run, the app will search for old entries and delete them. If you do not
 wish to get rid of old entries, set this value to 0.
 
+#### oldentriesfilters: String
+
+A filter string that will be applied when deleting old entries.
+Useful when you want to keep old records that won't get updated.
+Only records that are old and match the filter will be deleted.
+
 #### maxRecordSize: Integer
 
 The maximum size in bytes of a record to be sent to Algolia. The default is 10,000 but could vary based on different plans.
