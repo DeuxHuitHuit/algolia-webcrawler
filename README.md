@@ -99,7 +99,7 @@ Simple delay between each requests made to the website in milliseconds.
 
 #### oldentries: Integer
 
-The maximum number of seconds an entry can live without being updated. After
+The maximum number of milliseconds an entry can live without being updated. After
 each run, the app will search for old entries and delete them. If you do not
 wish to get rid of old entries, set this value to 0.
 
