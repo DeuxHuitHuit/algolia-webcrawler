@@ -8,10 +8,7 @@ const now = new Date();
 const config = {
 	"selectors": [
 		{key: "title", selector: "title"}
-	],
-	"types": {
-		"json": "json"
-	}
+	]
 };
 
 test('Simple parse', (t) => {
@@ -87,19 +84,6 @@ test('Selector exclusion by data-attribute parse', (t) => {
 	c.selectors.push({key: 'links', selector: 'a', exclude: '[data-exclude]'});
 	parse(rec, data, c);
 	t.equal(rec.links, 'test');
-	t.end();
-});
-
-test('JSON formatter', (t) => {
-	const rec = {};
-	const c = _.cloneDeep(config);
-	const data = `<html>
-	<meta content='{"test":"1","tes2":0.4}'>
-</html>`;
-	c.selectors.push({key: 'json', selector: 'meta'});
-	parse(rec, data, c);
-	t.equal(rec.json.test, '1');
-	t.equal(rec.json.tes2, 0.4);
 	t.end();
 });
 

@@ -204,7 +204,7 @@ The string to remove from the specified key. Can also be an array of strings.
 
 #### types[key]: String
 
-The parse function used to format the value. Supported types are "integer", "float" and "json".
+The parse function used to format the value. Supported types are "integer", "float", "boolean" and "json".
 
 #### defaults[key]: String
 
