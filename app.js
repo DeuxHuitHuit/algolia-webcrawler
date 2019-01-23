@@ -93,16 +93,18 @@ if (pingback.ok) {
 sitemap(config, (sitemap, urls) => {
 	sitemapProcessed++;
 	
+	console.log('Parsing Sitemap %s', sitemap.url);
+
 	if (!urls.length) {
 		errors.push({
 			ok: 'warn',
-			msg: 'Sitemap does not contain any urls',
+			message: 'Sitemap ' + sitemap.url + ' does not contain any urls',
 			sitemap
 		});
 		console.log('Sitemap %s does not contain any urls', sitemap.url);
+	} else {
+		console.log('Sitemap %s contains %d urls', sitemap.url, urls.length);
 	}
-	
-	console.log('Parsing Sitemap %s', sitemap.url);
 	
 	const totalCount = urls.length;
 	if (_.isArray(config.blacklist)) {
@@ -177,6 +179,7 @@ sitemap(config, (sitemap, urls) => {
 			}
 			
 			if (record.action === 'delete') {
+				console.error('%d - About to delete! %s', id, record.objectID);
 				pages.deleteObject(record.objectID, (error, result) => {
 					if (!!error) {
 						console.log();
@@ -209,6 +212,7 @@ sitemap(config, (sitemap, urls) => {
 					}
 				});
 			} else {
+				console.error('%d - About to save! %s', id, record.objectID);
 				pages.saveObject(record, (error, result) => {
 					if (!!error) {
 						console.log();
@@ -343,9 +347,9 @@ const removeOldEntries = () => {
 const displayErrorReport = () => {
 	console.log();
 	if (!errors.length) {
-		console.log(chalk.green('No error were reported during the crawl!'));
+		console.log(chalk.green('No problem were reported during the crawl!'));
 	} else {
-		console.log(chalk.yellow('%d errors occurred during the crawl'), errors.length);
+		console.log(chalk.yellow('%d problems occurred during the crawl'), errors.length);
 		_.forEach(errors, (e) => {
 			const isWarn = e.ok === 'warn';
 			const fx = isWarn ? 'warn' : 'error';
