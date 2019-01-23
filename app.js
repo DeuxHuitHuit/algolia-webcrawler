@@ -125,7 +125,11 @@ sitemap(config, (sitemap, urls) => {
 	if (sitemapProcessed === config.sitemaps.length && sitemapCount === 0) {
 		console.log('All Sitemaps do not contain any urls');
 		process.exit(16);
-	} else if (!urls.length) {
+	} else if (sitemapProcessed === config.sitemaps.length) {
+		processOne.start();
+	}
+	
+	if (!urls.length) {
 		// Current sitemap failed, exit
 		return;
 	}
