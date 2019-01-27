@@ -11,6 +11,7 @@ test('maxRecordSize', (t) => {
 	const rec = {
 		text: (new Array(100).fill('aaaaaaaaaa'))
 	};
+	t.equal(rec.text.length, 100);
 	const c = _.clone(config);
 	process.trimmer(rec, c);
 	t.equal(rec.text.length, 6);
