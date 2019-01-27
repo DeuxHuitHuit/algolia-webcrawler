@@ -161,25 +161,42 @@ If you do not need auth, you still need to specify an empty String.
 
 An object containing CSS selectors in order to find the content in the pages html.
 
-#### selectors.title: String
+#### selectors.title: String|Selector
 
 CSS selector for the title of the page.
 
-#### selectors.description: String
+#### selectors.description: String|Selector
 
 CSS selector for the description of the page.
 
-#### selectors.image: String
+#### selectors.image: String|Selector
 
 CSS selector for the image of the page.
 
-#### selectors.text: String
+#### selectors.text: String|Selector
 
 CSS selector for the title of the page.
 
-#### selectors[key]: String
+#### selectors[key]: String|Selector
 
 CSS selector for the "key" property. You can add custom keys as you wish.
+
+#### Selector Object
+
+Selectors can also be defined using the long form (i.e. as an object),
+which allow specifying custom properties on it.
+
+##### selectors[key].attributes: String|Array<String>
+
+Name of the attributes to look for values. Default is ['content', 'value'].
+
+##### selectors[key].selector: String
+
+The actual CSS selector to use.
+
+##### selectors[key].limit: Number
+
+The maximum number of nodes to check.
 
 ### exclusions: Object
 

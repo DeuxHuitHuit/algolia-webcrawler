@@ -102,3 +102,27 @@ test('Simple parse no spaces', (t) => {
 	t.equal(rec.title, 'test-test-test-test');
 	t.end();
 });
+
+test('Parse with limit', (t) => {
+	const rec = {
+		date: now,
+		timestamp: now.getTime()
+	};
+	const c = _.cloneDeep(config);
+	const data = `<html><head>
+	<title>1</title>
+	<title>2</title>
+	<title>3</title>
+	<title>4</title>
+	<title>5</title>
+<head></html>`;
+	parse(rec, data, c);
+	t.equal(rec.title.length, 5);
+	delete rec.title;
+	c.selectors[0].limit = 3;
+	parse(rec, data, c);
+	t.equal(rec.date, now);
+	t.equal(rec.timestamp, now.getTime());
+	t.equal(rec.title.length, 3);
+	t.end();
+});

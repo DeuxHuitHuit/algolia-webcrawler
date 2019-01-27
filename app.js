@@ -67,6 +67,7 @@ config.selectors = _.map(config.selectors, (selector, key) => {
 		key,
 		attributes: selector.attributes,
 		selector: selector.selector,
+		limit: selector.limit,
 		exclude: config.exclusions && config.exclusions[key]
 	};
 });
