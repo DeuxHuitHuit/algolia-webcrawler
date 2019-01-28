@@ -110,11 +110,11 @@ test('Parse with limit', (t) => {
 	};
 	const c = _.cloneDeep(config);
 	const data = `<html><head>
-	<title>1</title>
-	<title>2</title>
-	<title>3</title>
-	<title>4</title>
-	<title>5</title>
+	<title>test-1</title>
+	<title>test-2</title>
+	<title>test-3</title>
+	<title>test-4</title>
+	<title>test-5</title>
 <head></html>`;
 	parse(rec, data, c);
 	t.equal(rec.title.length, 5);
@@ -124,5 +124,25 @@ test('Parse with limit', (t) => {
 	t.equal(rec.date, now);
 	t.equal(rec.timestamp, now.getTime());
 	t.equal(rec.title.length, 3);
+	t.end();
+});
+
+test('Parse no min char', (t) => {
+	const rec = {
+		date: now,
+		timestamp: now.getTime()
+	};
+	const c = _.cloneDeep(config);
+	const data = `<html><head>
+	<title>test</title>
+	<title>t</title>
+	<title>test2</title>
+<head></html>`;
+	parse(rec, data, c);
+	t.equal(rec.date, now);
+	t.equal(rec.timestamp, now.getTime());
+	t.equal(rec.title.length, 2);
+	t.equal(rec.title[0], 'test');
+	t.equal(rec.title[1], 'test2');
 	t.end();
 });
