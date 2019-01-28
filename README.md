@@ -111,7 +111,13 @@ Only records that are old and match the filter will be deleted.
 
 #### maxRecordSize: Integer
 
-The maximum size in bytes of a record to be sent to Algolia. The default is 10,000 but could vary based on different plans.
+The maximum size in bytes of a record to be sent to Algolia.
+The default is 10,000 but could vary based on different plans.
+
+#### attributesToPop: Array<String>
+
+When the record is too big (based on maxRecordSize), the crawler will remove values from the text key.
+Use this attribute to configure which keys should be pruned when the record is too big.
 
 #### index: Object
 
