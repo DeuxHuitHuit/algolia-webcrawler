@@ -75,7 +75,7 @@ At the bare minimum, you can edit config.json to set a values to the following o
 If you have multiple sitemaps, please list them all: 
 sub-sitemaps will not be crawled.
 
-**All options are required.** No defaults are provided.
+**Most options are required.** No defaults are provided, unless stated otherwise.
 
 #### app: String
 
@@ -83,7 +83,7 @@ The name of your app.
 
 #### cred: Object
 
-Algolia crendentials object. See 'cred.appid' and 'cred.apikey'.
+Algolia credentials object. See 'cred.appid' and 'cred.apikey'.
 
 #### cred.appid: String
 
@@ -123,24 +123,24 @@ Use this attribute to configure which keys should be pruned when the record is t
 
 An object containing various values related to your index.
 
-#### index.name: String
+##### index.name: String
 
 Your index name.
 
-#### index.settings: Object
+##### index.settings: Object
 
 An object that will act as argument to Algolia's `Index#setSetting` method.
 
 Please read [Algolia's documentation on that subject](https://github.com/algolia/algoliasearch-client-js#index-settings).
 Any valid attribute documented for this method can be used.
 
-#### index.settings.attributesToIndex: Array<String>
+##### index.settings.attributesToIndex: Array<String>
 
 An array of string that defines which attributes are indexable,
 which means that full text search will be performed against them.
 For a complete list of possible attributes see the [Stored Object](#stored-object) section.
 
-#### index.settings.attributesForFaceting: Array<String>
+##### index.settings.attributesForFaceting: Array<String>
 
 An array of string that defines which attributes are filterable,
 which means that you can use them to exclude some records from being returned.
@@ -158,7 +158,7 @@ by url found in the sitemap.
 
 An object containing different http options.
 
-#### http.auth: String
+##### http.auth: String
 
 The auth string, in node's `username:password` form.
 If you do not need auth, you still need to specify an empty String.
@@ -167,23 +167,23 @@ If you do not need auth, you still need to specify an empty String.
 
 An object containing CSS selectors in order to find the content in the pages html.
 
-#### selectors.title: String|Selector
+##### selectors.title: String|Selector
 
 CSS selector for the title of the page.
 
-#### selectors.description: String|Selector
+##### selectors.description: String|Selector
 
 CSS selector for the description of the page.
 
-#### selectors.image: String|Selector
+##### selectors.image: String|Selector
 
 CSS selector for the image of the page.
 
-#### selectors.text: String|Selector
+##### selectors.text: String|Selector
 
 CSS selector for the title of the page.
 
-#### selectors[key]: String|Selector
+##### selectors[key]: String|Selector
 
 CSS selector for the "key" property. You can add custom keys as you wish.
 
@@ -204,17 +204,17 @@ The actual CSS selector to use.
 
 The maximum number of nodes to check.
 
-### exclusions: Object
+#### exclusions: Object
 
 An object containing CSS selectors to find elements that must not be indexed.
 Those CSS selectors are matched for each node and are check against all their parents to make
 sure non of its parent are excluded.
 
-#### exclusions.text: String
+##### exclusions.text: String
 
 CSS selector of excluded elements for the text of the page.
 
-#### exclusions[key]: String
+##### exclusions[key]: String
 
 CSS selector of excluded elements for "key" property. The key must match the one used in selectors[key].
 
@@ -223,11 +223,11 @@ CSS selector of excluded elements for "key" property. The key must match the one
 An object containing formatter string. Their values are removed from the original result obtained
 with the associated CSS selector.
 
-#### formatters.title: String,Array
+##### formatters.title: String,Array
 
 The string to remove from the title of the page. Can also be an array of strings.
 
-#### formatters[key]: String,Array
+##### formatters[key]: String,Array
 
 The string to remove from the specified key. Can also be an array of strings.
 
@@ -298,4 +298,4 @@ Indexing is done automatically, at each run. To tweak how indexing works, please
 
 [MIT](http://deuxhuithuit.mit-license.org)    
 Made with love in Montréal by [Deux Huit Huit](https://deuxhuithuit.com)    
-Copyrights (c) 2014-2018
+Copyrights (c) 2014-2019
