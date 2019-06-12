@@ -225,7 +225,7 @@ sitemap(config, (sitemap, urls) => {
 					}
 				});
 			} else {
-				console.error('%d - About to save! %s', id, record.objectID);
+				console.log('%d - About to save! %s:%s (%s)', id, record.objectID, record.lang, record.url);
 				pages.saveObject(record, (error, result) => {
 					if (!!error) {
 						console.log();
