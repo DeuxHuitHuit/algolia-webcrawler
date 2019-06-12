@@ -143,11 +143,11 @@ sitemap(config, (sitemap, urls) => {
 			url,
 			index,
 			plugins
-		}, (error, record) => {
+		}, function processOneCallback(error, record) {
 			const id = urlCount + 1;
 			if (!!error || !record) {
 				console.error('%d - Error! %s', id, error.message);
-				if (!!error) {
+				if (!!error && !error.retry) {
 					errors.push(error);
 				}
 				if ((!!error.pageNotFound || !!error.pageRedirected) && !!record) {
@@ -164,13 +164,20 @@ sitemap(config, (sitemap, urls) => {
 						});
 					});
 				} else if (!!error.retry) {
-					processOne({
+					console.error('%d - Retry url %s', id, url.url);
+					const retryResult = processOne({
 						config,
 						url,
 						index,
 						plugins,
 						isRetry: true
-					});
+					}, processOneCallback);
+					
+					if (!retryResult.ok) {
+						console.error('%d - Error! %s', id, retryResult.message);
+						errors.push(retryResult);
+					}
+					processOne.resume();
 				} else {
 					//Ping back delete
 					pingbackUrl({
