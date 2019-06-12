@@ -156,7 +156,7 @@ sitemap(config, (sitemap, urls) => {
 
 						//Ping back delete
 						pingbackUrl({
-							id, id,
+							id,
 							result: 'success',
 							action: 'delete',
 							url: url.url,
@@ -181,7 +181,7 @@ sitemap(config, (sitemap, urls) => {
 				} else {
 					//Ping back delete
 					pingbackUrl({
-						id, id,
+						id,
 						result: 'success',
 						action: 'delete',
 						url: url.url,
