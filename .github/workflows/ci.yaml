@@ -9,7 +9,7 @@ jobs:
       max-parallel: 6
       matrix:
         operating-system: [ubuntu-latest, windows-latest, macOS-latest]
-        node-version: [8.x, 10.x, 12.x]
+        node-version: [10.x, 12.x]
 
     name: ${{ matrix.operating-system }} - ${{ matrix.node-version }}
 
