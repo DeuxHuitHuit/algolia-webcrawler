@@ -9,7 +9,6 @@
 const argv = require('optimist').argv;
 const pack = require('./package.json');
 const path = require('path');
-const fs = require('fs');
 const u = require('url');
 const _ = require('lodash');
 const algoliasearch = require('algoliasearch');
@@ -18,7 +17,7 @@ const chalk = require('chalk');
 
 const processOne = require('./lib/process');
 const sitemap = require('./lib/sitemap');
-const dns = require('./lib/dns-cache');
+require('./lib/dns-cache');
 
 let sitemapProcessed = 0;
 let sitemapCount = 0;
@@ -38,7 +37,6 @@ try {
 	config = null;
 }
 
-const pkg = require('./package.json');
 updateNotifier({pkg: pack}).notify();
 
 if (!_.isObject(config)) {
