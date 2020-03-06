@@ -3,6 +3,7 @@
 [![npm version](https://badge.fury.io/js/algolia-webcrawler.svg)](http://badge.fury.io/js/algolia-webcrawler)
 [![Build Status](https://travis-ci.org/DeuxHuitHuit/algolia-webcrawler.svg)](https://travis-ci.org/DeuxHuitHuit/algolia-webcrawler)
 ![Build Status](https://ci.appveyor.com/api/projects/status/2xjk6u9u1jruswfw?svg=true)
+![Build status](https://github.com/DeuxHuitHuit/algolia-webcrawler/workflows/CI/badge.svg)    
 [![Greenkeeper badge](https://badges.greenkeeper.io/DeuxHuitHuit/algolia-webcrawler.svg)](https://greenkeeper.io/)
 [![David DM](https://david-dm.org/DeuxHuitHuit/algolia-webcrawler/status.svg?style=flat)](https://david-dm.org/DeuxHuitHuit/algolia-webcrawler/)
 [![Maintainability](https://api.codeclimate.com/v1/badges/ee40fe13f5462b7c90d7/maintainability)](https://codeclimate.com/github/DeuxHuitHuit/algolia-webcrawler/maintainability)
