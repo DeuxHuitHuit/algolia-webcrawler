@@ -5,7 +5,9 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "node test/index.js | faucet"
+    "test": "node test/index.js | faucet",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "bin": {
     "algolia-webcrawler": "app.js"
@@ -26,7 +28,8 @@
     "md5": "^2.2.1",
     "optimist": "^0.6.1",
     "trim": "0.0.1",
-    "update-notifier": "^4.0.0"
+    "update-notifier": "^4.0.0",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "faucet": "0.0.1",
@@ -40,5 +43,6 @@
   "bugs": {
     "url": "https://github.com/DeuxHuitHuit/algolia-webcrawler/issues"
   },
-  "homepage": "https://github.com/DeuxHuitHuit/algolia-webcrawler"
+  "homepage": "https://github.com/DeuxHuitHuit/algolia-webcrawler",
+  "snyk": true
 }
