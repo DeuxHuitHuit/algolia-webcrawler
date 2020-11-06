@@ -25,7 +25,7 @@
     "lodash": "^4.17.15",
     "md5": "^2.2.1",
     "optimist": "^0.6.1",
-    "trim": "0.0.1",
+    "trim": "0.0.3",
     "update-notifier": "^4.0.0"
   },
   "devDependencies": {
