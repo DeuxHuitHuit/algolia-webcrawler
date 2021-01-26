@@ -21,7 +21,7 @@
     "algoliasearch": "^3.35.1",
     "chalk": "^3.0.0",
     "cheerio": "^1.0.0-rc.3",
-    "html-entities": "^1.2.1",
+    "html-entities": "^2.0.6",
     "lodash": "^4.17.15",
     "md5": "^2.2.1",
     "optimist": "^0.6.1",
