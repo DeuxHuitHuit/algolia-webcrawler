@@ -1,0 +1,41 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "10:00"
+  open-pull-requests-limit: 10
+  target-branch: dev
+  ignore:
+  - dependency-name: algoliasearch
+    versions:
+    - 4.8.4
+    - 4.8.5
+    - 4.8.6
+    - 4.9.0
+  - dependency-name: html-entities
+    versions:
+    - 2.1.0
+    - 2.1.1
+    - 2.3.1
+  - dependency-name: tape
+    versions:
+    - 5.1.1
+    - 5.2.0
+    - 5.2.1
+  - dependency-name: cheerio
+    versions:
+    - 1.0.0-rc.5
+  - dependency-name: trim
+    versions:
+    - 1.0.0
+  - dependency-name: update-notifier
+    versions:
+    - 5.0.1
+  - dependency-name: lodash
+    versions:
+    - 4.17.20
+  - dependency-name: chalk
+    versions:
+    - 4.1.0
